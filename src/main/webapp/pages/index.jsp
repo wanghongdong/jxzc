@@ -45,7 +45,7 @@
 
 				<div class="layui-form-item">
 					<div class="layui-inline">
-						<label class="layui-form-label">条目一</label>
+						<label class="layui-form-label">一级分类</label>
 						<div class="layui-input-inline">
 							<select name="interest" lay-filter="aihao">
 								<option value=""></option>
@@ -58,17 +58,15 @@
 						</div>
 					</div>
 					<div class="layui-inline">
-						<label class="layui-form-label">条目一</label>
+						<label class="layui-form-label">二级分类</label>
 						<div class="layui-input-inline">
-							<select name="quiz">
-								<option value="">请选择问题</option>
-								<optgroup label="城市记忆">
-									<option value="你工作的第一个城市">你工作的第一个城市</option>
-								</optgroup>
-								<optgroup label="学生时代">
-									<option value="你的工号">你的工号</option>
-									<option value="你最喜欢的老师">你最喜欢的老师</option>
-								</optgroup>
+							<select name="interest" lay-filter="aihao">
+								<option value=""></option>
+								<option value="0">写作</option>
+								<option value="1" selected="">阅读</option>
+								<option value="2">游戏</option>
+								<option value="3">音乐</option>
+								<option value="4">旅行</option>
 							</select>
 						</div>
 					</div>

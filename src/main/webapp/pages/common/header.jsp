@@ -55,19 +55,12 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item"><a href="/index">首页</a></li>
-                <li class="layui-nav-item"><a href="javascript:;">行业管理</a></li>
+                <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
                 <li class="layui-nav-item">
-                    <a class="" href="javascript:;">目录管理</a>
+                    <a class="" href="javascript:;">分类管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">一级e目录管理</a></dd>
-                        <dd><a href="javascript:;">二级目录管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">报告页面</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">行业一</a></dd>
-                        <dd><a href="javascript:;">行业二</a></dd>
+                        <dd><a href="javascript:;">一级分类管理</a></dd>
+                        <dd><a href="javascript:;">二级分类管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">checkList管理</a></li>

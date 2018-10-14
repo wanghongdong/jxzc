@@ -57,4 +57,17 @@ public class FileController {
             e.printStackTrace();
         }
     }
+
+    public static void main(String[] args) throws IOException {
+
+        InputStream inputStream = new FileInputStream(new File("C:\\Users\\admin\\Desktop\\type.txt"));
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String s = reader.readLine();
+
+        System.out.println(s);
+
+
+    }
 }
