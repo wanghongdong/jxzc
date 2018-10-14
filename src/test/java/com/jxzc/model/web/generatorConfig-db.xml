@@ -2,9 +2,6 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<context id="DB2Tables"  defaultModelType="flat"  targetRuntime="MyBatis3">
-		<!-- Mybatis generator mapper文件重新生成不会覆盖原文件，为了解决此问题 -->
-		<plugin type="OverIsMergeablePlugin"></plugin>
-	
 		<!-- 是否去除自动生成的注释 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true"/>
@@ -12,7 +9,7 @@
 		</commentGenerator>
 
 		<!-- 数据库连接信息 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver"	connectionURL="jdbc:mysql://192.168.1.107:3306/js" userId="news" password="123456">
+		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"	connectionURL="jdbc:mysql://192.168.1.107:3306/js?characterEncoding=utf-8&amp;useSSL=false&amp;useUnicode=true&amp;serverTimezone=UTC" userId="news" password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true"/>
@@ -33,21 +30,14 @@
 		</javaClientGenerator>
 
 		<!-- 需要自动生成的表 -->
-		<!--<table tableName="car_driver_team" domainObjectName="CarDriverTeam"-->
-			<!--enableSelectByExample="false" enableDeleteByExample="false"-->
-			<!--enableCountByExample="false" enableUpdateByExample="false">-->
-			<!--<property name="useActualColumnNames" value="false" />-->
-			<!--<generatedKey column="id" sqlStatement="MySql" identity="true" />-->
-		<!--</table>-->
-
-		<table tableName="driver_daily_report" domainObjectName="DriverDailyReport"
+		<table tableName="user" domainObjectName="User"
 			   enableSelectByExample="false" enableDeleteByExample="false"
 			   enableCountByExample="false" enableUpdateByExample="false">
 			<property name="useActualColumnNames" value="false" />
 			<generatedKey column="id" sqlStatement="MySql" identity="true" />
 		</table>
 
-		<table tableName="car_relate_group" domainObjectName="CarRelateGroup"
+		<table tableName="industrycategory" domainObjectName="IndustryCategory"
 			   enableSelectByExample="false" enableDeleteByExample="false"
 			   enableCountByExample="false" enableUpdateByExample="false">
 			<property name="useActualColumnNames" value="false" />

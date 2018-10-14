@@ -5,7 +5,6 @@ package com.jxzc.model.bean;
  * @PackageName: com.jxzc.model.bean
  * @Auther: wanghongdong
  * @Date: 2018/9/26 22 27
- * @Description: //**
  * @ProjectName: jxzc
  * @PackageName: com.jxzc.model.bean
  * @ClassName: FileInfo

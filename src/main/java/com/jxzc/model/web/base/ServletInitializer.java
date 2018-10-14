@@ -1,6 +1,6 @@
 package com.jxzc.model.web.base;
 
-import com.jxzc.model.web.WebApplication;
+import com.jxzc.model.WebApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
