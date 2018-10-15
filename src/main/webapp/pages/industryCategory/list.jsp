@@ -7,49 +7,57 @@
 		<div class="layui-main" style="margin-top: 15px">
 			<form class="layui-form" action="">
 				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">验证日期</label>
-						<div class="layui-input-inline">
-							<input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">行业类别</label>
-						<div class="layui-input-inline">
-							<select name="modules" lay-verify="required" lay-search="">
-								<option value="">直接选择或搜索选择</option>
-								<option value="1">layer</option>
-								<option value="2">form</option>
-								<option value="3">layim</option>
-								<option value="4">element</option>
-								<option value="5">laytpl</option>
-								<option value="6">upload</option>
-								<option value="7">laydate</option>
-								<option value="8">laypage</option>
-								<option value="9">flow</option>
-								<option value="10">util</option>
-								<option value="11">code</option>
-								<option value="12">tree</option>
-								<option value="13">layedit</option>
-								<option value="14">nav</option>
-								<option value="15">tab</option>
-								<option value="16">table</option>
-								<option value="17">select</option>
-								<option value="18">checkbox</option>
-								<option value="19">switch</option>
-								<option value="20">radio</option>
-							</select>
-						</div>
-					</div>
+					<table class="layui-hide" id="test" lay-filter="test"></table>
 				</div>
 			</form>
 		</div>
 	</div>
 	<div class="layui-footer">
-		© layui.com - 底部固定区域
 	</div>
 </div>
+<script type="text/html" id="barDemo">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 <script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            title:"行业类别",
+            method:"post",
+            elem: '#test'
+            ,url:'/industryCategory/list'
+			,defaultToolbar:['exports']
+            ,cols: [[
+                {field:'name', width:80, title: '行业名称', edit: 'text'}
+                ,{field:'isOpen', width:80, title: '是否共享', sort: true, edit: 'text'}
+                ,{field:'sort', width:80, title: '排序', sort: true, edit: 'text'}
+                ,{field:'right', width:135, title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: true
+        });
+
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;

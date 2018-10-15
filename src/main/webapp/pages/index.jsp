@@ -8,9 +8,9 @@
 			<form class="layui-form" action="">
 				<div class="layui-form-item">
 					<div class="layui-inline">
-						<label class="layui-form-label">验证日期</label>
+						<label class="layui-form-label">日期</label>
 						<div class="layui-input-inline">
-							<input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+							<input type="text" name="date" id="date" lay-verify="date" readonly="readonly" placeholder="日期选择" autocomplete="off" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-inline">
@@ -145,7 +145,6 @@
 	</div>
 	<div class="layui-footer">
 		<!-- 底部固定区域 -->
-		© layui.com - 底部固定区域
 	</div>
 </div>
 <script>
@@ -281,6 +280,11 @@
             }
         });
     });
+</script>
+<script>
+	$(function () {
+    });
+
 </script>
 </body>
 </html>

@@ -24,6 +24,7 @@
     <div class="layui-header">
         <div class="layui-logo">嘉数-工作总结管理</div>
         <ul class="layui-nav layui-layout-left">
+            <div class="layui-nav-item" id="dateDom"></div>
             <%--<li class="layui-nav-item"><a href="">控制台</a></li>--%>
             <%--<li class="layui-nav-item"><a href="">商品管理</a></li>--%>
             <%--<li class="layui-nav-item"><a href="">用户</a></li>--%>
@@ -37,17 +38,15 @@
             <%--</li>--%>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <%--<li class="layui-nav-item">--%>
-                <%--<a href="javascript:;">--%>
-                    <%--<img src="http://t.cn/RCzsdCq" class="layui-nav-img">--%>
-                    <%--贤心--%>
-                <%--</a>--%>
-                <%--<dl class="layui-nav-child">--%>
-                    <%--<dd><a href="">基本资料</a></dd>--%>
-                    <%--<dd><a href="">安全设置</a></dd>--%>
-                <%--</dl>--%>
-            <%--</li>--%>
-            <div class="layui-nav-item" id="dateDom"></div>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    ${SESSION_CURRENT_USER.username}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">修改密码</a></dd>
+                </dl>
+            </li>
         </ul>
     </div>
     <div class="layui-side layui-bg-black">
