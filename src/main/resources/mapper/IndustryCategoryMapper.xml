@@ -14,10 +14,27 @@
     id, name, is_open, sort, create_id, create_time
   </sql>
 
-  <select id="queryListByPage" resultMap="BaseResultMap">
+  <select id="queryListByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Base_Column_List" />
-    from industrycategory
+    from industrycategory where is_open = 1
+    <if test="userId != null and userId != '' ">
+      or create_id = #{userId}
+    </if>
+    order by sort
+  </select>
+
+  <select id="verify" resultMap="BaseResultMap" parameterType="com.jxzc.model.entity.IndustryCategory">
+    select
+    <include refid="Base_Column_List" />
+    from industrycategory where 1=1
+    <if test="id != null and id != '' ">
+      and id != #{id}
+    </if>
+    <if test="name != null and name != '' ">
+      and name = #{name}
+    </if>
+    order by sort
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

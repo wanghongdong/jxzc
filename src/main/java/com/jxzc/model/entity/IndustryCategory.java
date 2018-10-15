@@ -8,7 +8,7 @@ public class IndustryCategory implements Serializable {
 
     private String name;
 
-    private Integer isOpen;
+    private Integer isOpen = 0;
 
     private Integer sort;
 

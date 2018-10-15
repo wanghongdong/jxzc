@@ -2,9 +2,10 @@ package com.jxzc.model.service;
 
 import com.jxzc.model.bean.PageBean;
 import com.jxzc.model.entity.IndustryCategory;
-import org.springframework.stereotype.Service;
 
-@Service(value = "industryCategoryService")
+import java.util.List;
+
+
 public interface IndustryCategoryService {
 
     /**
@@ -13,7 +14,7 @@ public interface IndustryCategoryService {
      */
     IndustryCategory queryById(Integer id);
 
-    PageBean<IndustryCategory> queryList(PageBean page);
+    PageBean<IndustryCategory> queryList(PageBean pageBean,Integer userId);
 
     int saveEntity(IndustryCategory category);
 
@@ -21,4 +22,5 @@ public interface IndustryCategoryService {
 
     int delEntity(Integer id);
 
+    List<IndustryCategory> verify(IndustryCategory entity);
 }

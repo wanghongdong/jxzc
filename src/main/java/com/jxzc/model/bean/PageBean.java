@@ -10,7 +10,7 @@ public class PageBean<T> {
 
     private Integer count;
 
-    private List<T> list;
+    private List<T> data;
 
     private Integer page = 1;
 
@@ -40,12 +40,12 @@ public class PageBean<T> {
         this.count = count;
     }
 
-    public List<T> getList() {
-        return list;
+    public List<T> getData() {
+        return data;
     }
 
-    public void setList(List<T> list) {
-        this.list = list;
+    public void setData(List<T> data) {
+        this.data = data;
     }
 
     public Integer getPage() {

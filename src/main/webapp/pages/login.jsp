@@ -54,11 +54,11 @@
                     cache:false,
                     success: function(res){
                         if(res.code==1){
-                            layer.msg(res.msg, {offset: '15px',icon: 1,time: 2000}, function(){
+                            layer.msg(res.msg, {offset: '15px',icon: 1,time: 1000}, function(){
                                 window.location.href = '/';
                             });
                         }else{
-                            layer.msg(res.msg, {offset: '15px',icon: 2,time: 3000});
+                            layer.msg(res.msg, {offset: '15px',icon: 2,time: 2000});
                         }
                     }
                 });
