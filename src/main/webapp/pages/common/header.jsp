@@ -63,24 +63,34 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="menu" id="menu">
                     <li class="layui-nav-item"><a href="/index">首页</a></li>
                     <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
                     <li class="layui-nav-item">
                         <a class="" href="javascript:;">分类管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">一级分类管理</a></dd>
+                            <dd><a href="/class/list">一级分类管理</a></dd>
                             <dd><a href="javascript:;">二级分类管理</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item"><a href="">checkList管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:;">checkList管理</a></li>
                 </ul>
             </div>
     </div>
         <script>
             $(function(){
                 setInterval(function(){getDate()}, 1000);
-            })
+                var href = window.location.href;
+                $("#menu").find("a").each(function () {
+                    if (this.href == href){
+                        $(this).addClass("javascript:;");
+                        $(this).parents("li").addClass("layui-nav-itemed");
+                        if ($(this).parent().get(0).tagName == "DD"){
+                            $(this).parent().addClass("layui-this");
+                        }
+                    }
+                });
+            });
             function getDate() {
                 var today = new Date();
                 var date = today.getFullYear() + "-" + twoDigits(today.getMonth() + 1) + "-" + twoDigits(today.getDate()) + " ";

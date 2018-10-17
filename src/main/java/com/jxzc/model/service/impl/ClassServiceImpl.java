@@ -1,8 +1,11 @@
 package com.jxzc.model.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jxzc.model.bean.PageBean;
 import com.jxzc.model.dao.ClassMapper;
 import com.jxzc.model.entity.Class;
+import com.jxzc.model.entity.IndustryCategory;
 import com.jxzc.model.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +34,13 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public PageBean<Class> queryList(PageBean pageBean, Integer userId) {
-        return null;
+    public PageBean<Class> queryList(PageBean pageBean, Class c) {
+        PageHelper.startPage(pageBean.getPage(), pageBean.getLimit());
+        List<Class> list = classMapper.queryList(c);
+        PageInfo<Class> page = new PageInfo();
+        pageBean.setCount(page.getSize());
+        pageBean.setData(list);
+        return pageBean;
     }
 
     @Override

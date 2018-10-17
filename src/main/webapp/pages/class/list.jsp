@@ -23,6 +23,7 @@
 </script>
 <script>
     var tableIns = null;
+    var level = "${level}" == "" ? 1 : parseInt("${level}");
         layui.use(['table','layer'], function(){
         var table = layui.table;
         var layer = layui.layer;
@@ -30,15 +31,16 @@
             title:"行业类别",
             method:"post",
             elem: '#tableList',
-            url:'/industryCategory/list',
+            url:'/class/list',
             toolbar: '#toolbarDemo',
 			defaultToolbar: ['print','exportExcel'],
+			data:{level:level},
             cols: [[
-                {field:'name', title: '行业名称'}
+                {field:'classname', title: '类别名称'}
                 ,{field:'isOpen', title: '是否共享', sort: true, templet:function (d) {
 					if (d.isOpen==1) return "<span style='color: limegreen;'>是</span>";
 					else return "<span style='color: red;'>否</span>";
-                }}
+				}}
                 ,{field:'sort', title: '排序', sort: true}
                 ,{field:'right', title: '操作', toolbar: '#barDemo'}
             ]]

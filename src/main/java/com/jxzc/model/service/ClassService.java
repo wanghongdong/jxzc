@@ -11,7 +11,7 @@ public interface ClassService {
 
     List<Class> queryList(Class c);
 
-    PageBean<Class> queryList(PageBean pageBean, Integer userId);
+    PageBean<Class> queryList(PageBean pageBean, Class c);
 
     Class queryById(Integer id);
 
