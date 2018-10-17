@@ -34,6 +34,12 @@ public class IndustryCategoryServiceImpl implements IndustryCategoryService {
     }
 
     @Override
+    public List<IndustryCategory> queryList(Integer userId) {
+        List<IndustryCategory> list = industryCategoryMapper.queryListByPage(userId);
+        return list;
+    }
+
+    @Override
     public int saveEntity(IndustryCategory category) {
         category.setCreateTime(new Date());
         return industryCategoryMapper.insertSelective(category);

@@ -16,6 +16,8 @@ public interface IndustryCategoryService {
 
     PageBean<IndustryCategory> queryList(PageBean pageBean,Integer userId);
 
+    List<IndustryCategory> queryList(Integer userId);
+
     int saveEntity(IndustryCategory category);
 
     int updateEntity(IndustryCategory category);

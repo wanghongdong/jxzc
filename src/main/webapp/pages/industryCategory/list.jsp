@@ -10,8 +10,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="layui-footer">
-	</div>
+	<div class="layui-footer"></div>
 </div>
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
@@ -33,7 +32,7 @@
             elem: '#test',
             url:'/industryCategory/list',
             toolbar: '#toolbarDemo',
-			defaultToolbar: [],
+			defaultToolbar: ['print','exportExcel'],
             cols: [[
                 {field:'name', title: '行业名称'}
                 ,{field:'isOpen', title: '是否共享', sort: true}

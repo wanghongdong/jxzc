@@ -2,14 +2,18 @@ package com.jxzc.model.web;
 
 import com.jxzc.model.bean.AjaxMsg;
 import com.jxzc.model.dao.UserMapper;
+import com.jxzc.model.entity.IndustryCategory;
 import com.jxzc.model.entity.User;
+import com.jxzc.model.service.IndustryCategoryService;
 import com.jxzc.model.utils.JSConstant;
+import com.jxzc.model.utils.SystemUtils;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPatriarch;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,16 +47,14 @@ public class IndexController {
 
     @Autowired
     UserMapper userMapper;
-
-    @RequestMapping("/hello")
-    @ResponseBody
-    public String index() {
-        return "你好，大猪蹄子";
-    }
+    @Autowired
+    IndustryCategoryService industryCategoryService;
 
     @RequestMapping("/index")
-    public String hello(Map<String,Object> map) {
-        map.put("msg", "Hello Freemarker");
+    public String index(ModelMap map, HttpServletRequest request) {
+        User user = SystemUtils.getCurrentUser(request);
+        List<IndustryCategory> categoryList = industryCategoryService.queryList(user.getId());
+        map.put("categoryList", categoryList);
         return "index";
     }
 

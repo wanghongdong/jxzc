@@ -8,13 +8,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
+<%
+    String path = request.getContextPath();
+    Integer serverPort = request.getServerPort();
+    String basePath;
+    if(serverPort==80){
+        basePath = "//"+request.getServerName()+path+"/";
+    }else{
+       basePath = "//"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    }
+%>
+<c:set var="ctx" value="<%=basePath%>"/>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>嘉数</title>
-    <link rel="stylesheet" href="../js/layui/css/layui.css">
-    <script src="../js/layui/layui.js"></script>
-    <script src="../js/jq.min.js"></script>
+    <link rel="stylesheet" href="${ctx}js/layui/css/layui.css">
+    <script src="${ctx}js/layui/layui.js"></script>
+    <script src="${ctx}js/jq.min.js"></script>
     <style>
         .layui-upload-img{margin: 0 10px 10px 0;}
     </style>
