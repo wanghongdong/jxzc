@@ -2,8 +2,10 @@ package com.jxzc.model.web;
 
 import com.jxzc.model.bean.AjaxMsg;
 import com.jxzc.model.dao.UserMapper;
+import com.jxzc.model.entity.Class;
 import com.jxzc.model.entity.IndustryCategory;
 import com.jxzc.model.entity.User;
+import com.jxzc.model.service.ClassService;
 import com.jxzc.model.service.IndustryCategoryService;
 import com.jxzc.model.utils.JSConstant;
 import com.jxzc.model.utils.SystemUtils;
@@ -26,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,13 +52,30 @@ public class IndexController {
     UserMapper userMapper;
     @Autowired
     IndustryCategoryService industryCategoryService;
+    @Autowired
+    ClassService classService;
 
     @RequestMapping("/index")
     public String index(ModelMap map, HttpServletRequest request) {
         User user = SystemUtils.getCurrentUser(request);
         List<IndustryCategory> categoryList = industryCategoryService.queryList(user.getId());
+        Class c = new Class();
+        c.setCreateId(user.getId());
+        c.setLevel(1);
+        List<Class> classes = classService.queryList(c);
         map.put("categoryList", categoryList);
+        map.put("oneClasses",classes);
         return "index";
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryTwoClasses")
+    public AjaxMsg queryTwoClasses(HttpServletRequest request, Integer pid){
+        User user = SystemUtils.getCurrentUser(request);
+        List<Class> classes = classService.queryTwoList(pid, user.getId());
+        Map<String, Object> map = new HashMap<>();
+        map.put("classes",classes);
+        return AjaxMsg.success("查询成功！",map);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

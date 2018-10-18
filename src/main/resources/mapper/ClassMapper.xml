@@ -13,7 +13,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, classname, level, pid, sort, is_open, create_id, create_time
+    id, classname, level, pid, sort, queryTwoList, create_id, create_time
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

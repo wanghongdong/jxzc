@@ -24,4 +24,6 @@ public interface ClassService {
 
     List<Class> verify(Class entity);
 
+    List<Class> queryTwoList(Integer pid, Integer userId);
+
 }

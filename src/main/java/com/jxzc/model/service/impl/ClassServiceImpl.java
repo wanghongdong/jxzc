@@ -76,5 +76,14 @@ public class ClassServiceImpl implements ClassService {
         return null;
     }
 
+    @Override
+    public List<Class> queryTwoList(Integer pid, Integer userId) {
+        Class c = new Class();
+        c.setPid(pid);
+        c.setCreateId(userId);
+        List<Class> list = classMapper.queryTwoList(c);
+        return list;
+    }
+
 
 }
