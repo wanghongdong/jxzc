@@ -10,6 +10,8 @@ import com.jxzc.model.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,7 +38,12 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public PageBean<Class> queryList(PageBean pageBean, Class c) {
         PageHelper.startPage(pageBean.getPage(), pageBean.getLimit());
-        List<Class> list = classMapper.queryList(c);
+        List<Class> list = new ArrayList<>();
+        if (c.getLevel()!=null && c.getLevel()==2){
+            list = classMapper.queryTwoList(c);
+        }else{
+            list = classMapper.queryList(c);
+        }
         PageInfo<Class> page = new PageInfo();
         pageBean.setCount(page.getSize());
         pageBean.setData(list);
@@ -50,6 +57,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public int saveEntity(Class c) {
+        c.setCreateTime(new Date());
         return classMapper.insert(c);
     }
 

@@ -22,23 +22,39 @@
 <div class="layui-layout layui-layout-admin">
 	<div class="layui-main" style="margin-top: 15px">
 		<div class="layui-form" action="" lay-filter="example">
+			<c:if test="${not empty level and level eq 2}">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">一级分类</label>
+						<div class="layui-input-inline">
+							<select name="pid" id="pid" lay-verify="required" lay-search>
+								<option value="">请选择一级分类</option>
+								<c:forEach var="item" items="${classes}">
+									<option value="${item.id}" <c:if test="${not empty entity.pid and entity.pid eq item.id}">selected</c:if> >${item.classname}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+				</div>
+			</c:if>
 			<div class="layui-form-item">
 				<div class="layui-inline">
-					<label class="layui-form-label">行业名称</label>
+					<label class="layui-form-label">分类名称</label>
 					<div class="layui-input-inline">
-						<input type="text" id="name" name="name" lay-verify="required||name" autocomplete="off" class="layui-input">
+						<input type="text" id="name" name="classname" lay-verify="required||name" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 			</div>
-			<div class="layui-form-item">
-				<div class="layui-inline">
-					<label class="layui-form-label">是否共享</label>
-					<div class="layui-input-inline">
-						<input type="checkbox" id="isOpen"  <c:if test="${not empty entity.isOpen and entity.isOpen==1}">checked=""</c:if>
-							   name="isOpen" lay-skin="switch" value="1" lay-filter="switchTest" lay-text="ON|OFF">
+			<c:if test="${empty level or level eq 1}">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">是否共享</label>
+						<div class="layui-input-inline">
+							<input type="checkbox" id="isOpen"  <c:if test="${not empty entity.isOpen and entity.isOpen==1}">checked=""</c:if> name="isOpen" lay-skin="switch" value="1" lay-filter="switchTest" lay-text="ON|OFF">
+						</div>
 					</div>
 				</div>
-			</div>
+			</c:if>
 			<div class="layui-form-item">
 				<div class="layui-inline">
 					<label class="layui-form-label">排序</label>
@@ -50,6 +66,7 @@
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<input type="hidden" id="id" name="id">
+					<input type="hidden" id="level" name="level">
 					<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
 				</div>
 			</div>
@@ -66,7 +83,7 @@
         //监听提交
         form.on('submit(demo1)', function(data){
             $.ajax({
-				url:"/industryCategory/save",
+				url:"/class/save",
 				data:data.field,
 				dataType:"json",
 				type:"post",
@@ -77,8 +94,8 @@
 					}else{
                         parent.tableIns.reload();
 					}
-					layer.closeAll();
-					layer.alert(data.msg,{icon:iconType});
+					parent.layer.closeAll();
+                    parent.layer.alert(data.msg,{icon:iconType});
                 }
 			})
         });
@@ -100,8 +117,14 @@
 		if (id!=""){
             form.val('example', {
                 "id": "${entity.id}",
-                "name": "${entity.name}",
-                "sort": "${entity.sort}"
+                "classname": "${entity.classname}",
+                "sort": "${entity.sort}",
+				"level" : "${entity.level}",
+				"pid" : "${entity.pid}"
+            })
+		}else{
+            form.val('example', {
+                "level" : "${level}"
             })
 		}
     });

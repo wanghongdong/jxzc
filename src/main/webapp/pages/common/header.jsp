@@ -70,7 +70,7 @@
                         <a class="" href="javascript:;">分类管理</a>
                         <dl class="layui-nav-child">
                             <dd><a href="/class/list">一级分类管理</a></dd>
-                            <dd><a href="javascript:;">二级分类管理</a></dd>
+                            <dd><a href="/class/list?level=2">二级分类管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item"><a href="javascript:;">checkList管理</a></li>

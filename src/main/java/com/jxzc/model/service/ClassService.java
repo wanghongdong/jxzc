@@ -2,6 +2,7 @@ package com.jxzc.model.service;
 
 import com.jxzc.model.bean.PageBean;
 import com.jxzc.model.entity.Class;
+import com.jxzc.model.entity.IndustryCategory;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface ClassService {
     int delEntity(Integer id);
 
     List<Class> verify(Class entity);
+
 }

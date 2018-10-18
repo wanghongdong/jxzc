@@ -32,7 +32,7 @@
             elem: '#tableList',
             url:'/industryCategory/list',
             toolbar: '#toolbarDemo',
-			defaultToolbar: ['print','exportExcel'],
+			defaultToolbar: [],
             cols: [[
                 {field:'name', title: '行业名称'}
                 ,{field:'isOpen', title: '是否共享', sort: true, templet:function (d) {

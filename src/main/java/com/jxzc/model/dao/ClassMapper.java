@@ -18,4 +18,6 @@ public interface ClassMapper {
     int updateByPrimaryKey(Class record);
 
     List<Class> queryList(Class c);
+
+    List<Class> queryTwoList(Class c);
 }

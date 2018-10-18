@@ -13,9 +13,11 @@ public class Class implements Serializable {
 
     private Integer pid;
 
+    private String pname;
+
     private Integer sort;
 
-    private Integer isOpen;
+    private Integer isOpen = 0;
 
     private Integer createId;
 
@@ -83,5 +85,13 @@ public class Class implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getPname() {
+        return pname;
+    }
+
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 }

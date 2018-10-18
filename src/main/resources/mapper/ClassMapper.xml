@@ -28,7 +28,7 @@
     <include refid="Base_Column_List" />
     from class where 1=1
     <if test="createId!=null and createId !=''">
-      and create_id = #{createId} or is_open = 1
+      and (create_id = #{createId} or is_open = 1)
     </if>
     <if test="createId ==null or createId ==''">
       and is_open = 1
@@ -40,6 +40,20 @@
       and pid = #{pid}
     </if>
     order by sort asc, create_time desc
+  </select>
+
+  <select id="queryTwoList" parameterType="com.jxzc.model.entity.Class" resultMap="BaseResultMap">
+    select c.*,p.classname pname from class c left join class p on c.pid=p.id where 1=1 and c.`level`=2
+    <if test="createId!=null and createId !=''">
+      and (c.create_id = #{createId} or p.is_open = 1)
+    </if>
+    <if test="createId ==null or createId ==''">
+      and p.is_open = 1
+    </if>
+    <if test="pid != null and pid !='' ">
+      and c.pid = #{pid}
+    </if>
+    order by p.sort,c.sort asc, c.create_time desc
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
