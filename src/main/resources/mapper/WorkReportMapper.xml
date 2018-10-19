@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxzc.model.dao.WorkReportMapper">
+  <resultMap id="BaseResultMap" type="com.jxzc.model.entity.WorkReport">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="industryCategory" jdbcType="INTEGER" property="industrycategory" />
+    <result column="oneClass" jdbcType="INTEGER" property="oneclass" />
+    <result column="twoClass" jdbcType="INTEGER" property="twoclass" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="related_events" jdbcType="VARCHAR" property="relatedEvents" />
+    <result column="personal_comments" jdbcType="VARCHAR" property="personalComments" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.jxzc.model.entity.WorkReport">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into workreport (industryCategory, oneClass, twoClass, 
+      title, related_events, personal_comments, 
+      create_id, create_time, work_time
+      )
+    values (#{industrycategory,jdbcType=INTEGER}, #{oneclass,jdbcType=INTEGER}, #{twoclass,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{relatedEvents,jdbcType=VARCHAR}, #{personalComments,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{workTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jxzc.model.entity.WorkReport">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into workreport
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="industrycategory != null">
+        industryCategory,
+      </if>
+      <if test="oneclass != null">
+        oneClass,
+      </if>
+      <if test="twoclass != null">
+        twoClass,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="relatedEvents != null">
+        related_events,
+      </if>
+      <if test="personalComments != null">
+        personal_comments,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="workTime != null">
+        work_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="industrycategory != null">
+        #{industrycategory,jdbcType=INTEGER},
+      </if>
+      <if test="oneclass != null">
+        #{oneclass,jdbcType=INTEGER},
+      </if>
+      <if test="twoclass != null">
+        #{twoclass,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedEvents != null">
+        #{relatedEvents,jdbcType=VARCHAR},
+      </if>
+      <if test="personalComments != null">
+        #{personalComments,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

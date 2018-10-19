@@ -9,35 +9,35 @@
 		</commentGenerator>
 
 		<!-- 数据库连接信息 -->
-		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"	connectionURL="jdbc:mysql://192.168.1.107:3306/js?characterEncoding=utf-8&amp;useSSL=false&amp;useUnicode=true&amp;serverTimezone=UTC" userId="news" password="123456">
+		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"	connectionURL="jdbc:mysql://114.116.73.134:3306/js?characterEncoding=utf-8&amp;useSSL=false&amp;useUnicode=true&amp;serverTimezone=UTC" userId="xzw" password="Xzw@2018">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true"/>
 		</javaTypeResolver>
 
 		<!-- po实体类代码位置 -->
-		<javaModelGenerator targetPackage="com.jxzc.model.entity"	targetProject="D:\\development\\workspace\\jsjz\\src\\main\\java">
+		<javaModelGenerator targetPackage="com.jxzc.model.entity"	targetProject="C:\work\development\workspaces1\jxzc\\src\\main\\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		<!-- sql代码的xml映射文件位置 -->
-		<sqlMapGenerator targetPackage="mapper" targetProject="D:\\development\\workspace\\jsjz\\src\\main\\resources">
+		<sqlMapGenerator targetPackage="mapper" targetProject="C:\work\development\workspaces1\jxzc\\src\\main\\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!-- mapper接口位置 -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.jxzc.model.dao" targetProject="D:\\development\\workspace\\jsjz\\src\\main\\java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.jxzc.model.dao" targetProject="C:\work\development\workspaces1\jxzc\\src\\main\\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 		<!-- 需要自动生成的表 -->
-		<table tableName="user" domainObjectName="User"
+		<table tableName="workreport" domainObjectName="WorkReport"
 			   enableSelectByExample="false" enableDeleteByExample="false"
 			   enableCountByExample="false" enableUpdateByExample="false">
 			<property name="useActualColumnNames" value="false" />
 			<generatedKey column="id" sqlStatement="MySql" identity="true" />
 		</table>
 
-		<table tableName="industrycategory" domainObjectName="IndustryCategory"
+		<table tableName="filepic" domainObjectName="FilePic"
 			   enableSelectByExample="false" enableDeleteByExample="false"
 			   enableCountByExample="false" enableUpdateByExample="false">
 			<property name="useActualColumnNames" value="false" />

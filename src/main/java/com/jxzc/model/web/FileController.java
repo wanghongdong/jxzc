@@ -1,11 +1,17 @@
 package com.jxzc.model.web;
 
+import com.jxzc.model.bean.AjaxMsg;
 import com.jxzc.model.bean.FileInfo;
+import com.jxzc.model.entity.FilePic;
+import com.jxzc.model.service.FilePicService;
+import com.jxzc.model.utils.SystemUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPatriarch;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ProjectName: jxzc
@@ -32,20 +41,42 @@ import java.io.*;
 @RequestMapping("/file")
 public class FileController {
 
-    private String path = "d:\\";
+    @Value("${file.path}")
+    private String path;
+
+    @Autowired
+    public FilePicService filePicService;
 
     @PostMapping
-    public FileInfo upload(MultipartFile file) throws Exception {
-
-        System.out.println(file.getName());
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getSize());
-
-        File localFile = new File(path, file.getOriginalFilename());
-
-        file.transferTo(localFile);
-
-        return new FileInfo(localFile.getAbsolutePath());
+    public AjaxMsg upload(MultipartFile file,HttpServletRequest request){
+        if(file==null || file.isEmpty()){
+            return AjaxMsg.error("上传失败：文件不能为空！");
+        }
+        if (file.getSize()>2*1024*1024){
+            return AjaxMsg.error("上传失败：文件大小不能超过2MB！");
+        }
+        String filePath = path + File.separatorChar + SystemUtils.getCurrentUser(request).getLoginname();
+        long time = new Date().getTime();
+        String filename = file.getOriginalFilename();
+        String fileType = filename.substring(filename.lastIndexOf("."), filename.length());
+        File localFile = new File(filePath, time+fileType);
+        if (!localFile.getParentFile().exists()){
+            localFile.getParentFile().mkdirs();
+        }
+        try {
+            file.transferTo(localFile);
+            FilePic pic = new FilePic();
+            pic.setFileName(filename);
+            pic.setFilePath(localFile.getPath());
+            filePicService.insert(pic);
+            Map<String,Object> map = new HashMap<>();
+            map.put("path",pic.getFilePath());
+            map.put("id",pic.getId());
+            return AjaxMsg.success("上传成功！",map);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return AjaxMsg.error("上传失败！");
+        }
     }
 
     @GetMapping("/{id}")

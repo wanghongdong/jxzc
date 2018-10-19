@@ -5,6 +5,7 @@ import com.jxzc.model.dao.UserMapper;
 import com.jxzc.model.entity.Class;
 import com.jxzc.model.entity.IndustryCategory;
 import com.jxzc.model.entity.User;
+import com.jxzc.model.entity.WorkReport;
 import com.jxzc.model.service.ClassService;
 import com.jxzc.model.service.IndustryCategoryService;
 import com.jxzc.model.utils.JSConstant;
@@ -28,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +69,16 @@ public class IndexController {
         map.put("oneClasses",classes);
         return "index";
     }
+
+    @ResponseBody
+    @RequestMapping("/saveReport")
+    public AjaxMsg saveReport(ModelMap map, HttpServletRequest request, WorkReport report) {
+        User user = SystemUtils.getCurrentUser(request);
+        report.setCreateId(user.getId());
+        report.setCreateTime(new Date());
+        return AjaxMsg.success();
+    }
+
 
     @ResponseBody
     @RequestMapping("/queryTwoClasses")

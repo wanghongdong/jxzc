@@ -28,6 +28,7 @@
     <script src="${ctx}js/jq.min.js"></script>
     <style>
         .layui-upload-img{margin: 0 10px 10px 0;}
+        .required{margin-left: 5px; margin-right:5px; color: red;}
     </style>
 </head>
 <body class="layui-layout-body">

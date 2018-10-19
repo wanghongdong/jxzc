@@ -55,7 +55,7 @@
                     success: function(res){
                         if(res.code==1){
                             layer.msg(res.msg, {offset: '15px',icon: 1,time: 1000}, function(){
-                                window.location.href = '/';
+                                window.location.href = '/index';
                             });
                         }else{
                             layer.msg(res.msg, {offset: '15px',icon: 2,time: 2000});
