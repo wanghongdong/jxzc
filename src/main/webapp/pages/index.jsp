@@ -145,12 +145,12 @@
         laydate.render({
             elem: '#workTime' //指定元素
         });
-        var relatedEventsIndex = layedit.build('LAY_relatedEvents_editor',{hideTool: ['image', 'unlink', 'face']}); //建立编辑器
-        var personalCommentsIndex = layedit.build('LAY_personalComments_editor',{hideTool: ['image', 'unlink', 'face']}); //建立编辑器
+        var relatedEventsIndex = layedit.build('LAY_relatedEvents_editor',{tool: []}); //建立编辑器
+        var personalCommentsIndex = layedit.build('LAY_personalComments_editor',{tool: []}); //建立编辑器
         form.on('select(oneclass)', function(data){
             var onClassId = data.value;
             if (onClassId!=null && onClassId!="" && onClassId!=undefined){
-                var loadIndex = layer.load();
+                var loadIndex = layer.load(2);
                 $.ajax({
                     url:"/queryTwoClasses",
                     data:{pid:onClassId},
@@ -308,16 +308,43 @@
         form.on('submit(submitForm)', function(data){
             var relatedEvents = layedit.getText(relatedEventsIndex);
             var personalComments = layedit.getText(personalCommentsIndex);
-            if(relatedEvents!=null && relatedEvents!="" && relatedEvents!=undefined){
+            data.field.relatedEvents = relatedEvents;
+            data.field.personalComments = personalComments;
+            if(relatedEvents!=null && relatedEvents!="" && relatedEvents!=undefined && relatedEvents.length>500){
 				layer.alert("相关事件最多输入500个字符！",{icon:2});
 				return false;
 			}
-            if(personalComments!=null && personalComments!="" && personalComments!=undefined){
+            if(personalComments!=null && personalComments!="" && personalComments!=undefined && personalComments.length>500){
                 layer.alert("个人点评最多输入500个字符！",{icon:2});
                 return false;
             }
-            data.field.relatedEvents = layedit.getContent(relatedEventsIndex);
-            data.field.personalComments = layedit.getContent(personalCommentsIndex);
+            // data.field.relatedEvents = layedit.getContent(relatedEventsIndex);
+            // data.field.personalComments = layedit.getContent(personalCommentsIndex);
+            var index = layer.load(1);
+            $.ajax({
+				url:"/saveReport",
+                data:{report:JSON.stringify(data.field)},
+                dataType:"json",
+                type:"post",
+				success:function (res) {
+                    layer.close(index);
+					if (res.code==1){
+                        layer.alert("保存成功，请下载文件。",{icon:1},function () {
+                            window.open("/reportExcelDown?excelName="+res.map.excelName);
+                            window.location.href="/index";
+                            // $.get("/reportExcelDown?excelName="+res.map.excelName, function(result){
+                            //     window.location.href="/index";
+                            // });
+                        });
+					}else{
+                        layer.alert(res.msg, {icon:2});
+					}
+                },error:function (res,msg,error) {
+                    layer.close(index);
+					layer.alert("网络出错，code："+res.code,{icon:2});
+                }
+			});
+            return false;
         });
     });
 </script>

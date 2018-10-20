@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jxzc.model.dao.FilePicMapper">
-  <resultMap id="BaseResultMap" type="com.jxzc.model.entity.FilePic">
+<mapper namespace="com.jxzc.web.dao.FilePicMapper">
+  <resultMap id="BaseResultMap" type="com.jxzc.web.entity.FilePic">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="w_id" jdbcType="INTEGER" property="wId" />
     <result column="file_name" jdbcType="VARCHAR" property="fileName" />
     <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+    <result column="format_name" jdbcType="VARCHAR" property="formatName" />
   </resultMap>
-  <insert id="insert" parameterType="com.jxzc.model.entity.FilePic">
+
+  <sql id="Base_Column_List">
+    id, w_id, file_name, file_path, format_name
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from filepic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByWid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from filepic
+    where w_id = #{wId,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insert" parameterType="com.jxzc.web.entity.FilePic">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into filepic (w_id, file_name, file_path
+    insert into filepic (w_id, file_name, file_path, format_name
       )
-    values (#{wId,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}
+    values (#{wId,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{formatName,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.jxzc.model.entity.FilePic">
+
+  <insert id="insertSelective" parameterType="com.jxzc.web.entity.FilePic">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -31,6 +52,9 @@
       <if test="filePath != null">
         file_path,
       </if>
+      <if test="formatName != null">
+        format_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="wId != null">
@@ -42,6 +66,14 @@
       <if test="filePath != null">
         #{filePath,jdbcType=VARCHAR},
       </if>
+      <if test="formatName != null">
+        #{formatName,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
+
+  <update id="updateWid" parameterType="com.jxzc.web.entity.FilePic">
+    update filepic set  w_id = #{wId}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>
