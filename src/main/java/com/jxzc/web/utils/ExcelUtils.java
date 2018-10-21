@@ -5,10 +5,13 @@ import com.jxzc.web.entity.Class;
 import com.jxzc.web.entity.*;
 import com.jxzc.web.service.ClassService;
 import com.jxzc.web.service.IndustryCategoryService;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.One;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.Region;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.PictureData;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * @ProjectName: jxzc
@@ -60,41 +60,87 @@ public class ExcelUtils {
             Row row = rit.next();
             for (Iterator<Cell> cit = row.cellIterator(); cit.hasNext(); ) {
                 Cell cell = cit.next();
-                if (cell.getStringCellValue().equals(twoClass.getClassname())){
+                if (cell.getCellType()== HSSFCell.CELL_TYPE_STRING && cell.getStringCellValue().equals(twoClass.getClassname())){
                     rowIndex = cell.getRowIndex();
                 }
             }
         }
-
-        if (rowIndex!=null){
-            //设置字体
-            HSSFFont font = excel.createFont();
-            font.setFontName("宋体");
-            font.setFontHeightInPoints((short) 11);
-            //设置单元格样式
-            HSSFCellStyle style = excel.createCellStyle();
-            style.setAlignment(HSSFCellStyle.ALIGN_LEFT);//水平
-            style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
-            style.setFont(font);
-            style.setWrapText(true);
-            HSSFRow row = sheet.getRow(rowIndex);
-            HSSFCell relatedEventsCell = row.createCell(2);
-            relatedEventsCell.setCellValue(new HSSFRichTextString(report.getRelatedEvents()));
-            relatedEventsCell.setCellStyle(style);
-            HSSFCell personalCommentsCell = row.createCell(3);
-            personalCommentsCell.setCellStyle(style);
-            personalCommentsCell.setCellValue(new HSSFRichTextString(report.getPersonalComments()));
-            int cellIndex = 4;
-            for (FilePic pic : pics) {
-                setPicCell(pic, excel, sheet, rowIndex, cellIndex);
-                cellIndex ++;
-            }
-            //生成的book 再次写入文件
-            writeBook(excel, report);
-        }else{
-
+        //设置字体
+        HSSFFont font = excel.createFont();
+        font.setFontName("宋体");
+        font.setFontHeightInPoints((short) 11);
+        //设置单元格样式
+        HSSFCellStyle style = excel.createCellStyle();
+        style.setAlignment(HSSFCellStyle.ALIGN_LEFT);//水平
+        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
+        style.setFont(font);
+        style.setWrapText(true);
+        if (rowIndex==null){
+            rowIndex = insertAllSheetRow(report, excel);
         }
+        writeReport(excel,sheet,rowIndex,report,style,pics);
+        //生成的book 再次写入文件
+        writeBook(excel, report);
         return getExcelName(report);
+    }
+
+    /**
+     * @Author wanghongdong
+     * @Description //TODO 插入数据
+     * @Date  2018/10/21 23:35
+     * @Param [wb, sheet, rowIndex, report, style, pics]
+     * @return void
+     **/
+    public void writeReport(HSSFWorkbook wb, HSSFSheet sheet, Integer rowIndex, WorkReport report, HSSFCellStyle style, List<FilePic> pics){
+        HSSFRow row = sheet.getRow(rowIndex);
+        HSSFCell relatedEventsCell = row.createCell(2);
+        relatedEventsCell.setCellValue(new HSSFRichTextString(report.getRelatedEvents()));
+        relatedEventsCell.setCellStyle(style);
+        HSSFCell personalCommentsCell = row.createCell(3);
+        personalCommentsCell.setCellStyle(style);
+        personalCommentsCell.setCellValue(new HSSFRichTextString(report.getPersonalComments()));
+        int cellIndex = 4;
+        for (FilePic pic : pics) {
+            setPicCell(pic, wb, sheet, rowIndex, cellIndex);
+            cellIndex ++;
+        }
+    }
+
+    /**
+     * @Author wanghongdong
+     * @Description //TODO 插入行
+     * @Date  2018/10/21 23:35
+     * @Param [report, wb]
+     * @return void
+     **/
+    private Integer insertAllSheetRow(WorkReport report, HSSFWorkbook wb) {
+        //得到所有的
+        Map<Class, TreeSet<Class>> myClasses = classService.queryMyClasses(report.getCreateId());
+        int i = 0;
+        int insertRowIndex = 0;
+        int startRowIndex = 0;
+        int endRowIndex = 0;
+        for (Class oneClass : myClasses.keySet()) {
+            TreeSet<Class> myTwoClasses = myClasses.get(oneClass);
+            int j = 0;
+            for (Class myTwoClass : myClasses.get(oneClass)){
+                i++;
+                if (oneClass.getId().equals(report.getOneclass()) && myTwoClass.getId().equals(report.getTwoclass())){
+                    insertRowIndex = i;
+                }
+                if (j==0){
+                    startRowIndex = i;
+                }
+                if (j==myTwoClasses.size()-1){
+                    endRowIndex = i;
+                }
+                j++;
+            }
+        }
+        for (int j = 0; j < wb.getNumberOfSheets(); j++) {
+            insertRow(wb.getSheetAt(j), startRowIndex, endRowIndex, insertRowIndex);
+        }
+        return insertRowIndex;
     }
 
     /**
@@ -350,6 +396,39 @@ public class ExcelUtils {
     public HSSFCellStyle getCellStyle(HSSFWorkbook wb){
         HSSFCellStyle cellStyle = wb.createCellStyle();
         return cellStyle;
+    }
+
+    /**
+     * @Author wanghongdong
+     * @Description 在指定位置插入一行
+     * @Date  2018/10/21 23:37
+     * @Param [sheet 工作表, startRowIndex 开始的位置，合并单元格用, endRowIndex 结束的位置，合并单元格用, insertRowIndex 要插入的位置]
+     * @return void
+     **/
+    public void insertRow(HSSFSheet sheet, Integer startRowIndex, Integer endRowIndex, Integer insertRowIndex){
+        //插入一行
+        sheet.shiftRows(insertRowIndex, sheet.getLastRowNum(), 1, true, true, true);
+        //移动图片
+        HSSFPatriarch drawingPatriarch = sheet.getDrawingPatriarch();
+        if(drawingPatriarch!=null){
+            List<HSSFShape> shapes = drawingPatriarch.getChildren();
+            if (shapes!=null && shapes.size()>0){
+                for (HSSFShape shape : shapes) {
+                    HSSFClientAnchor anchor = (HSSFClientAnchor) shape.getAnchor();
+                    anchor.setAnchorType(HSSFClientAnchor.MOVE_AND_RESIZE);
+                    if (anchor.getRow1()>=insertRowIndex){
+                        anchor.setRow1(anchor.getRow1()+1);
+                        anchor.setRow2(anchor.getRow1()+1);
+                    }
+                }
+            }
+        }
+        sheet.addMergedRegion(new Region(startRowIndex, //first row (0-based)
+                (short)1, //first column  (0-based)
+                endRowIndex, //last row (0-based)
+                (short)1  //last column  (0-based)
+        ));
+        sheet.getRow(insertRowIndex).setHeightInPoints(70);
     }
 
 }

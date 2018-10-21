@@ -106,6 +106,25 @@ public class Class implements Serializable, Comparable<Class>{
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false ;
+        else{
+            if (obj instanceof Class) {
+                Class c = (Class) obj;
+                return (id.equals(c.id));
+            }else{
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+
+    }
+
+    @Override
     public int compareTo(Class o) {
         if(this.sort > o.sort){
             return 1;

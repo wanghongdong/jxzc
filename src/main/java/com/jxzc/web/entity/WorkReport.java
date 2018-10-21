@@ -1,5 +1,7 @@
 package com.jxzc.web.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,6 +29,7 @@ public class WorkReport implements Serializable {
 
     private String createName;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     private Date workTime;
