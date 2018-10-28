@@ -5,9 +5,12 @@
 <%@include file="../common/header.jsp"%>
 	<div class="layui-body">
 		<div class="layui-main" style="margin-top: 15px">
-			<div class="layui-form-item">
-				<table class="layui-hide" id="tableList" lay-filter="tableList"></table>
-			</div>
+			<fieldset class="layui-elem-field">
+				<legend>行业类别管理</legend>
+				<div class="layui-field-box">
+					<table class="layui-hide" id="tableList" lay-filter="tableList"></table>
+				</div>
+			</fieldset>
 		</div>
 	</div>
 	<div class="layui-footer"></div>

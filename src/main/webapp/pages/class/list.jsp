@@ -46,8 +46,19 @@
 				</c:if>
                 {field:'classname', title: '类别名称'},
 				{field:'pisOpen', title: '是否共享', sort: true, templet:function (d) {
-					if (d.pisOpen==1) return "<span style='color: limegreen;'>是</span>";
-					else return "<span style='color: red;'>否</span>";
+					if (d.level == 2){
+					    if(d.pisOpen==1){
+                            return "<span style='color: limegreen;'>是</span>";
+						}else{
+                        	return "<span style='color: red;'>否</span>";
+						}
+					}else {
+                        if(d.isOpen==1){
+                            return "<span style='color: limegreen;'>是</span>";
+                        }else{
+                        	return "<span style='color: red;'>否</span>";
+                        }
+					}
 				}},
 				{field:'sort', title: '排序', sort: true},
 				{field:'right', title: '操作', toolbar: '#barDemo'}

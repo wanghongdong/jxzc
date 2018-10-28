@@ -140,7 +140,11 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.7</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.zhuanche</groupId>
+            <artifactId>mp-util</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

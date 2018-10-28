@@ -74,7 +74,7 @@
                             <dd><a href="/class/list?level=2">二级分类管理</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item"><a href="javascript:;">checkList管理</a></li>
+                    <li class="layui-nav-item"><a href="/checkList/list">CHECKLIST管理</a></li>
                 </ul>
             </div>
     </div>
