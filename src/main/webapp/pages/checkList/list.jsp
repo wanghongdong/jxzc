@@ -5,38 +5,92 @@
 <%@include file="../common/header.jsp"%>
 	<div class="layui-body">
 		<div class="layui-main" style="margin-top: 15px">
-			<fieldset class="layui-elem-field">
-				<legend>CHECKLIST管理</legend>
-				<div class="layui-field-box">
-					<table class="layui-table" lay-data="{url:'/', id:'test3'}" lay-filter="checkList">
-						<thead>
+			<div class="layui-form" action="" id="layui-form">
+				<fieldset class="layui-elem-field">
+					<legend>CHECKLIST管理</legend>
+					<div class="layui-field-box">
+						<div class="layui-field-title">
+							<button class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" id="exportExcel">
+								<i class="layui-icon layui-icon-download-circle"></i>导出EXCEL</button>
+						</div>
+						<table class="layui-table" lay-filter="checkList" lay-size="sm" lay-skin="line">
+							<colgroup>
+								<col width="20%"><col width="20%"><col width="20%"><col width="20%"><col width="20%">
+							</colgroup>
+							<thead>
 							<tr>
-								<th lay-data="{type:'checkbox'}">ID</th>
-								<th lay-data="{field:'id', width:80, sort: true}">ID</th>
-								<th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
-								<th lay-data="{field:'email', edit: 'text', minWidth: 150}">邮箱</th>
-								<th lay-data="{field:'sex', width:80, edit: 'text'}">性别</th>
-								<th lay-data="{field:'city', edit: 'text', minWidth: 100}">城市</th>
-								<th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>
+								<th align="center">Checklist</th>
+								<th>关注点</th>
+								<th>有，且影响大</th>
+								<th>有，但影响小</th>
+								<th>没有</th>
 							</tr>
-						</thead>
-					</table>
-				</div>
-			</fieldset>
+							</thead>
+							<tbody class="layui-tbody">
+								<c:forEach items="${listMap}" var="map" varStatus="mq">
+									<c:forEach items="${map.value}" var="item" varStatus="iq">
+										<tr class="${item.pid}_${item.id}">
+											<c:if test="${iq.first}">
+												<td rowspan="${map.value.size()}">${map.key.checkname}</td>
+											</c:if>
+											<td class="${item.pid}">${item.checkname}</td>
+											<td>
+												<input type="checkbox" class="switch" name="switch" lay-text="ON|OFF" lay-skin="switch" lay-filter="switch">
+												<div></div>
+											</td>
+											<td>
+												<input type="checkbox" class="switch" name="switch" lay-text="ON|OFF" lay-skin="switch" lay-filter="switch">
+												<div></div>
+											</td>
+											<td>
+												<input type="checkbox" class="switch" name="switch" lay-text="ON|OFF" lay-skin="switch" lay-filter="switch">
+												<div></div>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+			</div>
 		</div>
 	</div>
 	<div class="layui-footer"></div>
 </div>
 <script>
-    layui.use(['table','layer','element'], function(){
-        var table = layui.table;
+    layui.use(['element','layer','form'], function(){
         var element = layui.element;
-        //监听单元格编辑
-        table.on('edit(checkList)', function(obj){
-            var value = obj.value //得到修改后的值
-                ,data = obj.data //得到所在行所有键值
-                ,field = obj.field; //得到字段
-            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+        var layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.$;
+
+        $("#exportExcel").click(function () {
+            var arr = new Array();
+			$(".layui-tbody").find("tr").each(function () {
+			    var check = "";
+			    $(this).find("input[type='checkbox']").each(function () {
+                    check += this.checked + ",";
+                });
+                arr.push({id:$(this).attr("class"),check:check});
+            });
+            var arrStr = JSON.stringify(arr);
+            $.ajax({
+                url:"/checkList/exportExcel",
+                data:{arrStr:arrStr},
+                dataType : "json",
+                type : "post",
+                success : function (result) {
+                    if (result.code==1){
+                    }else{
+                    }
+                },
+                error:function () {
+                    layer.closeAll();
+                    layer.alert("网络有误，请稍后重试或连续管理人员！",{icon:2})
+                }
+			});
+
         });
     });
 </script>

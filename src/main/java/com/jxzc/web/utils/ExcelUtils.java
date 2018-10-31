@@ -292,7 +292,7 @@ public class ExcelUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
         String format = sdf.format(report.getWorkTime());
         // 文件名格式： user.loginName_user.id_date.xls 例如： whd_1_2018_10_20.xls
-        String excelName = report.getCreateName() + "_" + report.getCreateId() + "_" + format + ".xls";
+        String excelName = report.getCreateName() + "_workReport" + report.getCreateId() + "_" + format + ".xls";
         return excelName;
     }
 

@@ -22,4 +22,9 @@ public class SystemUtils {
         return user;
     }
 
+    public String getLoginName(){
+        User user = (User) request.getSession().getAttribute(JSConstant.SESSION_CURRENT_USER);
+        return user.getLoginName();
+    }
+
 }

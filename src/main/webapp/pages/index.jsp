@@ -144,6 +144,9 @@
         //执行一个laydate实例
         laydate.render({
             elem: '#workTime' //指定元素
+            ,calendar: true
+            ,value: new Date()
+            ,isInitValue: true
         });
         var relatedEventsIndex = layedit.build('LAY_relatedEvents_editor',{tool: []}); //建立编辑器
         var personalCommentsIndex = layedit.build('LAY_personalComments_editor',{tool: []}); //建立编辑器
