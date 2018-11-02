@@ -39,6 +39,8 @@ public class ExcelUtils {
     IndustryCategoryService industryCategoryService;
     @Autowired
     ClassService classService;
+    @Autowired
+    SystemUtils systemUtils;
 
     @Value("${excel.path}")
     public String path;
@@ -83,6 +85,54 @@ public class ExcelUtils {
         writeBook(excel, report);
         return getExcelName(report);
     }
+
+    public String initExcels(List<WorkReportBean>  beans) throws IOException {
+        HSSFWorkbook excel = this.createExcel(beans.get(0).getReport());
+//        IndustryCategory category = industryCategoryService.queryById(report.getIndustrycategory());
+//        excel = assd();
+
+
+        //生成的book 再次写入文件
+        writeBook(excel, beans.get(0).getReport());
+        return getExcelName(beans.get(0).getReport());
+    }
+
+//    public HSSFWorkbook assd(HSSFWorkbook excel,WorkReportBean bean){
+//        WorkReport report = bean.getReport();
+//        List<FilePic> pics = bean.getPics();
+//        //得到要添加的行业的sheet
+//        Class twoClass = classService.queryById(report.getTwoclass());
+//
+//        HSSFSheet sheet = excel.getSheet(category.getName());
+//
+//        Integer rowIndex = null;
+//
+//        for (Iterator<Row> rit = sheet.rowIterator(); rit.hasNext(); ){
+//            Row row = rit.next();
+//            for (Iterator<Cell> cit = row.cellIterator(); cit.hasNext(); ) {
+//                Cell cell = cit.next();
+//                if (cell.getCellType()== HSSFCell.CELL_TYPE_STRING && cell.getStringCellValue().equals(twoClass.getClassname())){
+//                    rowIndex = cell.getRowIndex();
+//                }
+//            }
+//        }
+//        //设置字体
+//        HSSFFont font = excel.createFont();
+//        font.setFontName("宋体");
+//        font.setFontHeightInPoints((short) 11);
+//        //设置单元格样式
+//        HSSFCellStyle style = excel.createCellStyle();
+//        style.setAlignment(HSSFCellStyle.ALIGN_LEFT);//水平
+//        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
+//        style.setFont(font);
+//        style.setWrapText(true);
+//        if (rowIndex==null){
+//            rowIndex = insertAllSheetRow(report, excel);
+//        }
+//        writeReport(excel,sheet,rowIndex,report,style,pics);
+//        //生成的book 再次写入文件
+//        return excel;
+//    }
 
     /**
      * @Author wanghongdong
@@ -272,7 +322,7 @@ public class ExcelUtils {
         //格式化时间
         String excelName = getExcelName(report);
         // 目录： ${excel.path}/whd/whd_1_2018_10_20.excel
-        String excelPath = path + File.separatorChar + report.getCreateName();
+        String excelPath = path + File.separatorChar + systemUtils.getLoginName();
         File file = new File(excelPath);
         if (!file.exists()){
             file.mkdirs();
@@ -306,23 +356,9 @@ public class ExcelUtils {
     public HSSFWorkbook getExcel(WorkReport report) throws IOException {
         String excelPath = getExcelPath(report);
         File file = new File(excelPath);
-        //如果文件目录不存在，创建文件目录，否则读取文件
-        InputStream is = null;
-        HSSFWorkbook excel = new HSSFWorkbook();
-        if(!file.exists()){
-            //根据当前用户的行业类别创建所有的sheet
-            List<IndustryCategory> categories = industryCategoryService.queryList(report.getCreateId());
-            if(categories!=null && categories.size()>0){
-                for (IndustryCategory categorie : categories) {
-                    //按行业名称创建sheet
-                    createSheet(excel, categorie.getName(), report.getCreateId());
-                }
-            }
-            writeBook(excel, report);
-        }else{
-            is = new FileInputStream(file);
-            excel = new HSSFWorkbook(is);
-        }
+        //读取文件
+        InputStream is = new FileInputStream(file);
+        HSSFWorkbook excel = new HSSFWorkbook(is);
         if (is != null) {
             try {
                 is.close();
@@ -330,6 +366,26 @@ public class ExcelUtils {
                 e.printStackTrace();
             }
         }
+        return excel;
+    }
+
+    //创建excel
+    public HSSFWorkbook createExcel(WorkReport report) throws IOException {
+        String excelPath = getExcelPath(report);
+        File file = new File(excelPath);
+        if(!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
+        HSSFWorkbook excel = new HSSFWorkbook();
+        //根据当前用户的行业类别创建所有的sheet
+        List<IndustryCategory> categories = industryCategoryService.queryList(report.getCreateId());
+        if(categories!=null && categories.size()>0){
+            for (IndustryCategory categorie : categories) {
+                //按行业名称创建sheet
+                createSheet(excel, categorie.getName(), report.getCreateId());
+            }
+        }
+        writeBook(excel, report);
         return excel;
     }
 

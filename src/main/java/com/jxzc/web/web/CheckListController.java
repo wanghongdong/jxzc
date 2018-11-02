@@ -10,8 +10,9 @@ import com.jxzc.web.entity.IndustryCategory;
 import com.jxzc.web.entity.WorkReport;
 import com.jxzc.web.service.CheckListService;
 import com.jxzc.web.utils.SystemUtils;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -58,46 +57,60 @@ public class CheckListController {
 
     @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxMsg exportExcel(String arrStr){
+    public AjaxMsg exportExcel(String arrStr, HttpServletRequest request){
         JSONArray array = JSON.parseArray(arrStr);
+        List<CheckList> checkLists = checkListService.queryAll();
+
         Iterator<Object> iter = array.iterator();
         while(iter.hasNext()){
             JSONObject next = (JSONObject) iter.next();
             String idStr = next.getString("id");
             String[] s = idStr.split("_");
-            String pid = s[0];
-            String id = s[1];
             String check = next.getString("check");
+            String[] split = check.split(",");
+            String id = s[1];
+            String b1 =  split[0];
+            String b2 =  split[1];
+            String b3 =  split[2];
+            for(CheckList cs : checkLists){
+                if (cs.getId()==Integer.valueOf(id)){
+                    cs.setB1(b1);
+                    cs.setB2(b2);
+                    cs.setB3(b3);
+                }
+            }
+            String excel = getExcel(checkLists);
         }
         return AjaxMsg.success();
     }
 
-    public String getExcel(){
-        InputStream is = null;
+    public String getExcel(List<CheckList> list){
         //格式化时间
         String excelPath = null;
+        InputStream is = null;
+        Calendar cal = Calendar.getInstance();
+        int weekToday = cal.get(Calendar.DAY_OF_WEEK)-1;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
-            String format = sdf.format(new Date());
-            // 文件名格式： user.loginName_user.id_date.xls 例如： whd_1_2018_10_20.xls
-            String excelName = systemUtils.getLoginName() + "_checkList" + "_" + format + ".xls";
-            // 目录： ${excel.path}/whd/whd_1_2018_10_20.excel
-            excelPath = path + File.separatorChar + systemUtils.getLoginName();
-            File file = new File(excelPath);
-            if (!file.exists()){
-                file.mkdirs();
+            is = this.getClass().getResourceAsStream("/templates/checklist.xlsx");
+            HSSFWorkbook book = new HSSFWorkbook(is);
+            HSSFSheet sheet = book.getSheetAt(0);
+
+            int lastRowNum = sheet.getLastRowNum();
+            for (int i = 2; i< lastRowNum; i++){
+                HSSFRow row = sheet.getRow(i);
+                HSSFCell cell1 = row.getCell(1);
+                if(cell1!=null){
+                    for (CheckList cs:list) {
+                        if(cs.getCheckname().equals(cell1.getStringCellValue())){
+                            int b1n = 2 + weekToday -1;
+                            int b2n = 3 + weekToday -1;
+                            int b3n = 4 + weekToday -1;
+                            row.createCell(3);
+                        }
+                    }
+                }
             }
-            //创建文件目录
-            HSSFWorkbook excel = new HSSFWorkbook();
-            HSSFSheet sheet = excel.createSheet("checkList");
-
-            sheet.createRow()
-
-
-
-
-
-            writeBook(excel, excelPath + File.separatorChar + excelName);
+            writeBook(book);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -112,8 +125,17 @@ public class CheckListController {
         return excelPath;
     }
 
-    private void writeBook(HSSFWorkbook excel, String excelPath) throws IOException {
-        FileOutputStream fileOut = new FileOutputStream(excelPath);
+    private void writeBook(HSSFWorkbook excel) throws IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
+        String format = sdf.format(new Date());
+        // 文件名格式： user.loginName_user.id_date.xls 例如： whd_1_2018_10_20.xls
+        String excelName = systemUtils.getLoginName() + "_checkList" + "_" + format + ".xls";
+        String excelPath = path + File.separatorChar + systemUtils.getLoginName();
+        File file = new File(excelPath);
+        if (!file.exists()){
+            file.mkdirs();
+        }
+        FileOutputStream fileOut = new FileOutputStream(excelPath + File.separatorChar + excelName);
         excel.write(fileOut);
         if (fileOut != null) {
             try {
