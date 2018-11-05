@@ -8,6 +8,7 @@ import com.jxzc.web.bean.PageBean;
 import com.jxzc.web.entity.CheckList;
 import com.jxzc.web.service.CheckListService;
 import com.jxzc.web.utils.SystemUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -81,26 +83,57 @@ public class CheckListController {
                 }
             }
         }
-        init();
-        String s1 = this.create(checkLists);
+        HSSFWorkbook workbook = initWorkBook();
+        if (workbook == null){
+            return AjaxMsg.error("创建失败！");
+        }
+        String s1 = this.create(checkLists,workbook);
         Map<String,Object> map = new HashMap<>();
-        map.put("url",s1);
+        map.put("excelName",s1);
         return AjaxMsg.success("创建成功！",map);
     }
 
+    @RequestMapping(value = "/excelDown")
+    public void download(String excelName, HttpServletRequest request, HttpServletResponse response) {
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        try {
+            inputStream = new FileInputStream(new File(getExcelPath()+ File.separatorChar + excelName));
+            outputStream = response.getOutputStream();
+            response.setContentType("application/x-download");
+            response.addHeader("Content-Disposition", "attachment;filename=" + getExcelName());
+            response.setCharacterEncoding("utf-8");
+            IOUtils.copy(inputStream, outputStream);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream!=null){
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (outputStream!=null){
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
-    private String excelPath;
-    private String excelName;
-    private HSSFWorkbook workbook;
-    private HSSFSheet sheet;
 
-    public String create(List<CheckList> list){
+    public String create(List<CheckList> list, HSSFWorkbook workbook){
         HSSFCellStyle style = workbook.createCellStyle();
         style.setFillForegroundColor(HSSFColor.LIME.index);// 设置背景色
         style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         HSSFCellStyle trueStyle = style;
         Calendar cal = Calendar.getInstance();
         int weekToday = cal.get(Calendar.DAY_OF_WEEK)-1;
+        HSSFSheet sheet = workbook.getSheetAt(0);
         int lastRowNum = sheet.getLastRowNum();
         for (int i = 2; i< lastRowNum-1; i++){
             HSSFRow row = sheet.getRow(i);
@@ -130,21 +163,23 @@ public class CheckListController {
             }
         }
         writeBook(workbook);
-        return excelPath + File.separatorChar + excelName;
+        return getExcelName();
     }
 
-    public void init(){
-        excelPath = path + File.separatorChar + systemUtils.getLoginName();
-        excelName = getExcelName();
-        initWorkBook();
+    private String getExcelPath() {
+        return path + File.separatorChar + systemUtils.getLoginName();
     }
+
 
     /**
      * 获取workBook
      * @return
      */
-    private void initWorkBook() {
+    private HSSFWorkbook initWorkBook() {
         InputStream is = null;
+        String excelPath = getExcelPath();
+        String excelName = getExcelName();
+        HSSFWorkbook workbook = null;
         try {
             File file = new File(excelPath);
             if (!file.exists()){
@@ -157,7 +192,6 @@ public class CheckListController {
                 is = new FileInputStream(file);
             }
             workbook = new HSSFWorkbook(is);
-            sheet = workbook.getSheetAt(0);
             writeBook(workbook);
             logger.info("写出excel完成");
             logger.info("excelName：{}，excelPath：{},",excelName,excelPath);
@@ -175,6 +209,7 @@ public class CheckListController {
                 }
             }
         }
+        return workbook;
     }
 
     /**
@@ -196,13 +231,13 @@ public class CheckListController {
      * @throws IOException
      */
     private void writeBook(HSSFWorkbook excel){
-        File file = new File(excelPath);
+        File file = new File(getExcelPath());
         if (!file.exists()){
             file.mkdirs();
         }
         FileOutputStream fileOut = null;
         try {
-            fileOut = new FileOutputStream(excelPath + File.separatorChar + excelName);
+            fileOut = new FileOutputStream(getExcelPath() + File.separatorChar + getExcelName());
             excel.write(fileOut);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
