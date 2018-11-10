@@ -61,9 +61,13 @@ public class CheckListController {
     @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
     @ResponseBody
     public AjaxMsg exportExcel(String arrStr, HttpServletRequest request){
+        Calendar cal = Calendar.getInstance();
+        int weekToday = cal.get(Calendar.DAY_OF_WEEK)-1;
+        if (weekToday==0||weekToday==6){
+            return AjaxMsg.error("非工作日时段，不能导出checkList！");
+        }
         JSONArray array = JSON.parseArray(arrStr);
         List<CheckList> checkLists = checkListService.queryAll();
-
         Iterator<Object> iter = array.iterator();
         while(iter.hasNext()){
             JSONObject next = (JSONObject) iter.next();

@@ -82,8 +82,9 @@
                 type : "post",
                 success : function (result) {
                     if (result.code==1){
-                        layer.alert("保存成功，请下载文件。",{icon:1},function () {
+                        var index = layer.alert("保存成功，请下载文件。",{icon:1},function () {
                             window.open("/checkList/excelDown?excelName="+result.map.excelName);
+                            layer.close(index)
                         });
                     }else{
                         layer.alert(res.msg, {icon:2});
