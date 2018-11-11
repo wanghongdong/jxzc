@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,5 +72,22 @@ public class WorkReportServiceImpl implements WorkReportService {
     @Override
     public int delEntity(Integer id) {
         return 0;
+    }
+
+    @Override
+    public List<WorkReportBean> queryBeans(Date workTime) {
+        WorkReport report = new WorkReport();
+        report.setWorkTime(workTime);
+        List<WorkReport> reports = workReportMapper.selectList(report);
+        List<WorkReportBean> list = new ArrayList<>();
+        if(reports!=null && reports.size()>0){
+            for(WorkReport work : reports){
+                List<FilePic> filePics = filePicMapper.selectByWid(work.getId());
+                WorkReportBean bean = new WorkReportBean(work, filePics);
+                bean.setId(work.getId());
+                list.add(bean);
+            }
+        }
+        return list;
     }
 }

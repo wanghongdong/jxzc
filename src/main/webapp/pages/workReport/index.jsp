@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="common/header.jsp"%>
+<%@include file="../common/header.jsp"%>
 	<div class="layui-body">
 		<div class="layui-main" style="margin-top: 15px">
 			<form class="layui-form" action="">
@@ -119,7 +119,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="layui-form-item">
 					<div class="layui-input-block">
 						<button class="layui-btn" lay-submit="" lay-filter="submitForm">立即提交</button>
@@ -325,7 +324,7 @@
             // data.field.personalComments = layedit.getContent(personalCommentsIndex);
             var index = layer.load(1);
             $.ajax({
-				url:"/saveReport",
+				url:"/workReport/saveReport",
                 data:{report:JSON.stringify(data.field)},
                 dataType:"json",
                 type:"post",

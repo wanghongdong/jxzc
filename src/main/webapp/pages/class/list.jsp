@@ -63,7 +63,36 @@
 				{field:'sort', title: '排序', sort: true},
 				{field:'right', title: '操作', toolbar: '#barDemo'}
             ]]
-            ,page: true
+            ,page: true,
+            done: function(res, curr, count){
+                var classNames = "";
+                res.data.forEach(function (item) {
+                    if (classNames.indexOf(item.pname)<0){
+                        classNames += item.pname + ",";
+                    }
+                });
+                var classArr = classNames.substring(0,classNames.length-1).split(",");
+                var i = 0;
+				var $table = $($(".layui-table").get(1));
+                classArr.forEach(function(item){
+                    var $td = null;
+					$table.find("tr").each(function(){
+					    var $thisTr = $(this);
+                        var $thisTd = $($thisTr.find("td").get(0));
+                        var className = $thisTd.text();
+                        if (className == item){
+                            if(i!=0){
+                                $thisTd.remove();
+							}else{
+                                $td = $thisTd;
+							}
+                            i++;
+                        }
+                    });
+                    $td.attr("rowspan",i);
+                    i=0;
+				});
+            }
         });
 
         //头工具栏事件

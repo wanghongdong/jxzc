@@ -4,16 +4,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jxzc.web.bean.PageBean;
 import com.jxzc.web.dao.CheckListMapper;
-import com.jxzc.web.dao.ClassMapper;
 import com.jxzc.web.entity.CheckList;
 import com.jxzc.web.entity.Class;
 import com.jxzc.web.service.CheckListService;
-import com.jxzc.web.service.ClassService;
-import org.apache.commons.collections.list.TreeList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class CheckListServiceImpl implements CheckListService {
@@ -32,7 +32,7 @@ public class CheckListServiceImpl implements CheckListService {
         List<CheckList> checkLists = queryAll();
         for (CheckList  list : checkLists) {
             if (list.getLevel()==1){
-                List<CheckList> childrens = new TreeList();
+                List<CheckList> childrens = new ArrayList<>();
                 for (CheckList list1 : checkLists) {
                     if (list1.getPid()!=null && list1.getPid()==list.getId()){
                         childrens.add(list1);

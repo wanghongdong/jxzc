@@ -23,11 +23,14 @@
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
           <div class="layui-form-item">
             <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-            <input name="loginname" id="LAY-user-login-username" lay-verify="username" placeholder="用户名" class="layui-input" type="text">
+            <input name="loginName" id="LAY-user-login-username" lay-verify="username" placeholder="账号" class="layui-input" type="text">
           </div>
           <div class="layui-form-item">
             <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
             <input name="password" id="LAY-user-login-password" lay-verify="password" placeholder="密码" class="layui-input" type="password">
+          </div>
+          <div class="layui-form-item" style="margin-bottom: 20px;">
+            <a lay-href="/index/register" href="/index/register" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">账号注册</a>
           </div>
           <div class="layui-form-item">
             <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="LAY-user-login-submit">登 入</button>
@@ -47,7 +50,7 @@
             var layer = layui.layer;
             form.on('submit(LAY-user-login-submit)', function(data){
                 $.ajax({
-                    url: '/login', //实际使用请改成服务端真实接口
+                    url: '/index/login', //实际使用请改成服务端真实接口
                     data: data.field,
                     dataType:"json",
                     type:"post",
@@ -57,7 +60,7 @@
                             // layer.msg(res.msg, {offset: '15px',icon: 1}, function(){
                             //
                             // });
-                            window.location.href = '/index';
+                            window.location.href = '/workReport/index';
                         }else{
                             layer.msg(res.msg, {offset: '15px',icon: 2,time: 2000});
                         }
@@ -67,16 +70,16 @@
             form.verify({
                 username: function(value, item){ //value：表单的值、item：表单的DOM对象
                     if (value==null || value== "" || value==undefined){
-                        return '用户名不能为空';
+                        return '账号不能为空';
                     }
                     if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
-                        return '用户名不能有特殊字符';
+                        return '账号不能有特殊字符';
                     }
                     if(/(^\_)|(\__)|(\_+$)/.test(value)){
-                        return '用户名首尾不能出现下划线\'_\'';
+                        return '账号首尾不能出现下划线\'_\'';
                     }
                     if(/^\d+\d+\d$/.test(value)){
-                        return '用户名不能全为数字';
+                        return '账号不能全为数字';
                     }
                 },password: function(value, item){ //value：表单的值、item：表单的DOM对象
                     if (value==null || value== "" || value==undefined){

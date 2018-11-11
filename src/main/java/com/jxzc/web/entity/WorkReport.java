@@ -9,7 +9,7 @@ public class WorkReport implements Serializable {
 
     private Integer id;
 
-    private Integer industrycategory;
+    private Integer industryCategory;
 
     private Integer oneclass;
 
@@ -42,12 +42,12 @@ public class WorkReport implements Serializable {
         this.id = id;
     }
 
-    public Integer getIndustrycategory() {
-        return industrycategory;
+    public Integer getIndustryCategory() {
+        return industryCategory;
     }
 
-    public void setIndustrycategory(Integer industrycategory) {
-        this.industrycategory = industrycategory;
+    public void setIndustryCategory(Integer industryCategory) {
+        this.industryCategory = industryCategory;
     }
 
     public Integer getOneclass() {

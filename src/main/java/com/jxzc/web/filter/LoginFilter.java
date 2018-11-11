@@ -36,14 +36,13 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getServletPath();
-        System.out.println("请求地址："+path);
-        if (!StringUtils.isEmpty(path) && (path.contains("login") || path.startsWith("/css") || path.startsWith("/js"))){
+        if (!StringUtils.isEmpty(path) && (path.contains("/index") || path.startsWith("/css") || path.startsWith("/js"))){
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }
         User user = (User) request.getSession().getAttribute(JSConstant.SESSION_CURRENT_USER);
         if (user==null){
-            response.sendRedirect("/login");
+            response.sendRedirect("/index/login");
             return;
         }else{
             filterChain.doFilter(servletRequest,servletResponse);

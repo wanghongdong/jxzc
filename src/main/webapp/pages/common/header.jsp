@@ -65,7 +65,7 @@
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree"  lay-filter="menu" id="menu">
-                    <li class="layui-nav-item"><a href="/index">首页</a></li>
+                    <li class="layui-nav-item"><a href="/workReport/index">首页</a></li>
                     <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
                     <li class="layui-nav-item">
                         <a class="" href="javascript:;">分类管理</a>

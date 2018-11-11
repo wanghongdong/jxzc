@@ -45,13 +45,11 @@ public class ExcelUtils {
     @Value("${excel.path}")
     public String path;
 
-    public String initExcel(WorkReportBean bean) throws IOException {
+    private void initExcel(WorkReportBean bean, HSSFWorkbook excel) throws IOException {
         WorkReport report = bean.getReport();
         List<FilePic> pics = bean.getPics();
-        //获取excel
-        HSSFWorkbook excel = getExcel(report);
         //得到要添加的行业的sheet
-        IndustryCategory category = industryCategoryService.queryById(report.getIndustrycategory());
+        IndustryCategory category = industryCategoryService.queryById(report.getIndustryCategory());
         Class twoClass = classService.queryById(report.getTwoclass());
 
         HSSFSheet sheet = excel.getSheet(category.getName());
@@ -77,62 +75,24 @@ public class ExcelUtils {
         style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
         style.setFont(font);
         style.setWrapText(true);
-        if (rowIndex==null){
-            rowIndex = insertAllSheetRow(report, excel);
+        if(rowIndex!=null){
+            writeReport(excel,sheet,rowIndex,report,style,pics);
         }
-        writeReport(excel,sheet,rowIndex,report,style,pics);
         //生成的book 再次写入文件
-        writeBook(excel, report);
-        return getExcelName(report);
+//        writeBook(excel, report);
+//        return getExcelName(report);
     }
 
     public String initExcels(List<WorkReportBean>  beans) throws IOException {
-        HSSFWorkbook excel = this.createExcel(beans.get(0).getReport());
-//        IndustryCategory category = industryCategoryService.queryById(report.getIndustrycategory());
-//        excel = assd();
-
-
+        WorkReport report = beans.get(0).getReport();
+        HSSFWorkbook excel = this.createExcel(report);
+        for (WorkReportBean bean : beans){
+            initExcel(bean, excel);
+        }
         //生成的book 再次写入文件
         writeBook(excel, beans.get(0).getReport());
         return getExcelName(beans.get(0).getReport());
     }
-
-//    public HSSFWorkbook assd(HSSFWorkbook excel,WorkReportBean bean){
-//        WorkReport report = bean.getReport();
-//        List<FilePic> pics = bean.getPics();
-//        //得到要添加的行业的sheet
-//        Class twoClass = classService.queryById(report.getTwoclass());
-//
-//        HSSFSheet sheet = excel.getSheet(category.getName());
-//
-//        Integer rowIndex = null;
-//
-//        for (Iterator<Row> rit = sheet.rowIterator(); rit.hasNext(); ){
-//            Row row = rit.next();
-//            for (Iterator<Cell> cit = row.cellIterator(); cit.hasNext(); ) {
-//                Cell cell = cit.next();
-//                if (cell.getCellType()== HSSFCell.CELL_TYPE_STRING && cell.getStringCellValue().equals(twoClass.getClassname())){
-//                    rowIndex = cell.getRowIndex();
-//                }
-//            }
-//        }
-//        //设置字体
-//        HSSFFont font = excel.createFont();
-//        font.setFontName("宋体");
-//        font.setFontHeightInPoints((short) 11);
-//        //设置单元格样式
-//        HSSFCellStyle style = excel.createCellStyle();
-//        style.setAlignment(HSSFCellStyle.ALIGN_LEFT);//水平
-//        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
-//        style.setFont(font);
-//        style.setWrapText(true);
-//        if (rowIndex==null){
-//            rowIndex = insertAllSheetRow(report, excel);
-//        }
-//        writeReport(excel,sheet,rowIndex,report,style,pics);
-//        //生成的book 再次写入文件
-//        return excel;
-//    }
 
     /**
      * @Author wanghongdong
@@ -154,43 +114,6 @@ public class ExcelUtils {
             setPicCell(pic, wb, sheet, rowIndex, cellIndex);
             cellIndex ++;
         }
-    }
-
-    /**
-     * @Author wanghongdong
-     * @Description //TODO 插入行
-     * @Date  2018/10/21 23:35
-     * @Param [report, wb]
-     * @return void
-     **/
-    private Integer insertAllSheetRow(WorkReport report, HSSFWorkbook wb) {
-        //得到所有的
-        Map<Class, TreeSet<Class>> myClasses = classService.queryMyClasses(report.getCreateId());
-        int i = 0;
-        int insertRowIndex = 0;
-        int startRowIndex = 0;
-        int endRowIndex = 0;
-        for (Class oneClass : myClasses.keySet()) {
-            TreeSet<Class> myTwoClasses = myClasses.get(oneClass);
-            int j = 0;
-            for (Class myTwoClass : myClasses.get(oneClass)){
-                i++;
-                if (oneClass.getId().equals(report.getOneclass()) && myTwoClass.getId().equals(report.getTwoclass())){
-                    insertRowIndex = i;
-                }
-                if (j==0){
-                    startRowIndex = i;
-                }
-                if (j==myTwoClasses.size()-1){
-                    endRowIndex = i;
-                }
-                j++;
-            }
-        }
-        for (int j = 0; j < wb.getNumberOfSheets(); j++) {
-            insertRow(wb.getSheetAt(j), startRowIndex, endRowIndex, insertRowIndex);
-        }
-        return insertRowIndex;
     }
 
     /**
