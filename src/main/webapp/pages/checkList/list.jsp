@@ -87,7 +87,7 @@
                             layer.close(index)
                         });
                     }else{
-                        layer.alert(res.msg, {icon:2});
+                        layer.alert(result.msg, {icon:2});
                     }
                 },
                 error:function () {

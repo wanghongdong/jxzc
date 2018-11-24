@@ -154,7 +154,7 @@
             if (onClassId!=null && onClassId!="" && onClassId!=undefined){
                 var loadIndex = layer.load(2);
                 $.ajax({
-                    url:"/queryTwoClasses",
+                    url:"/workReport/queryTwoClasses",
                     data:{pid:onClassId},
                     dataType : "json",
                     type : "post",
@@ -332,8 +332,8 @@
                     layer.close(index);
 					if (res.code==1){
                         layer.alert("保存成功，请下载文件。",{icon:1},function () {
-                            window.open("/reportExcelDown?excelName="+res.map.excelName);
-                            window.location.href="/index";
+                            window.open("/workReport/reportExcelDown?excelName="+res.map.excelName);
+                            window.location.href="/workReport/index";
                             // $.get("/reportExcelDown?excelName="+res.map.excelName, function(result){
                             //     window.location.href="/index";
                             // });

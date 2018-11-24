@@ -94,8 +94,9 @@
 					}else{
                         parent.tableIns.reload();
 					}
-					parent.layer.closeAll();
-                    parent.layer.alert(data.msg,{icon:iconType});
+                    layer.alert(data.msg,{icon:iconType},function(){
+                        parent.layer.closeAll();
+					});
                 }
 			})
         });
@@ -132,7 +133,7 @@
     function verifyName(value) {
         var msg = "";
         $.ajax({
-            url:"/industryCategory/verify",
+            url:"/class/verify",
             data:{name:value,id:$("#id").val()},
             dataType:"json",
             async:false,

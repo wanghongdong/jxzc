@@ -77,8 +77,9 @@
 					}else{
                         parent.tableIns.reload();
 					}
-					layer.closeAll();
-					layer.alert(data.msg,{icon:iconType});
+					layer.alert(data.msg,{icon:iconType},function(){
+                        parent.layer.closeAll();
+					});
                 }
 			})
         });
