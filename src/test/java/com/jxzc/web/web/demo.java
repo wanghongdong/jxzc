@@ -7,9 +7,7 @@ import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.PictureData;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.util.IOUtils;
-import org.apache.poi.xssf.usermodel.XSSFDrawing;
-import org.apache.poi.xssf.usermodel.XSSFPicture;
-import org.apache.poi.xssf.usermodel.XSSFShape;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -29,17 +27,19 @@ public class demo {
      * @param args
      */
     public static void main(String[] args) throws IOException {
-        File file = new File("D:\\usr\\local\\excel\\whd\\whd_1_2018_10_21.xls");
+        File file = new File("C:\\Users\\admin\\Desktop\\inspection_project.xlsx");
         if (file.exists()){
             InputStream is = new FileInputStream(file);
-            HSSFWorkbook wb = new HSSFWorkbook(is);//创建excel工作簿
-
-            int numberOfSheets = wb.getNumberOfSheets();
-
-            int activeSheetIndex = wb.getActiveSheetIndex();
-
-            System.out.println(numberOfSheets + "_" + activeSheetIndex);
-
+            XSSFWorkbook wb = new XSSFWorkbook(is);//创建excel工作簿
+            XSSFSheet sheetAt = wb.getSheetAt(0);
+            int lastRowNum = sheetAt.getLastRowNum();
+            System.out.println("lastRowNum   "+lastRowNum);
+            XSSFRow row = sheetAt.getRow(0);
+            short lastCellNum = row.getLastCellNum();
+            System.out.println("lastCellNum  "+lastCellNum);
+//            for (int i = 0; i <= lastRowNum; i++) {
+//                sheetAt.getR
+//            }
 //            FileOutputStream fileOut = new FileOutputStream(file);
 //            wb.write(fileOut);
 //            if (fileOut != null) {

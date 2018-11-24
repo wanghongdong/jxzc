@@ -5,17 +5,75 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.Date;
+import java.util.*;
 
 public class DemoWrite {
 
     public static void main(String[] args) throws IOException {
-        wirteDemoText(10004000);
+//        wirteDemoText(10004000);
 //        readLineAndWrite();
 //        readLine();
 
 //        String s = "filename.xls";
 //        System.out.println(s.substring(s.lastIndexOf(".")+1,s.length()));
+
+        getSameSet();
+    }
+
+
+    public static Set<String> readUserIdTxt() throws IOException {
+        long time = new Date().getTime();
+        LineNumberReader lnr = new LineNumberReader(new FileReader("C:\\Users\\admin\\Desktop\\userIds.txt"));
+        String line = null;
+        Set<String> userIds = new HashSet<>();
+        int i = 0;
+        while (StringUtils.isNotBlank((line = lnr.readLine()))){
+            i++;
+            userIds.add(line);
+        }
+        lnr.close();
+        long time1 = new Date().getTime();
+        System.out.println("总耗时：" + (time1-time) + ", userId总数量："+i);
+        return userIds;
+    }
+
+    public static Set<String> readTaskIdTxt() throws IOException {
+        long time = new Date().getTime();
+        LineNumberReader lnr = new LineNumberReader(new FileReader("C:\\Users\\admin\\Desktop\\taskId.txt"));
+        String line = null;
+        Set<String> taskIds = new HashSet<>();
+        int i = 0;
+        while (StringUtils.isNotBlank((line = lnr.readLine()))){
+            taskIds.add(line);
+            i++;
+        }
+        lnr.close();
+        long time1 = new Date().getTime();
+        System.out.println("总耗时：" + (time1-time) + ", taskId总数量："+i);
+        return taskIds;
+    }
+
+    public static Set<String> getSameSet() throws IOException {
+        long time = new Date().getTime();
+        Set<String> userIdTxt = readUserIdTxt();
+        Set<String> userIdTxt1 = readUserIdTxt();
+        Set<String> taskIdTxt = readTaskIdTxt();
+        boolean b = userIdTxt.retainAll(taskIdTxt);
+        boolean b1 = userIdTxt1.removeAll(userIdTxt);
+        long time1 = new Date().getTime();
+        System.out.println("总耗时：" + (time1-time) + "，重复数据："+userIdTxt.size() + ", 不重复数据："+userIdTxt1.size());
+
+        FileWriter fw = new FileWriter("C:\\Users\\admin\\Desktop\\diff.txt");
+        for (String line : userIdTxt1) {
+            fw.write(line+"\r\n");
+        }
+        FileWriter fw1 = new FileWriter("C:\\Users\\admin\\Desktop\\same.txt");
+        for (String line : userIdTxt) {
+            fw1.write(line+"\r\n");
+        }
+        fw1.close();
+        fw.close();
+        return userIdTxt;
     }
 
 
