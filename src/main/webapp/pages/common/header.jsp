@@ -74,7 +74,7 @@
                             <dd><a href="/class/list?level=2">二级分类管理</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item"><a href="/checkList/list">CHECKLIST管理</a></li>
+                    <li class="layui-nav-item"><a href="javascript:void(0);" onclick="checkCheckList();return false;">CHECKLIST管理</a></li>
                 </ul>
             </div>
     </div>
@@ -103,5 +103,15 @@
                 if (val < 10)
                     return "0" + val;
                 return val;
+            }
+            function checkCheckList() {
+                var weekToday = new Date().getDay();
+                if (weekToday==0||weekToday==6){
+                    layer.alert("非工作日时段，不能导出checkList！",{icon:2},function(){
+                        window.location.href="/checkList/list";
+                    });
+                    return false;
+                }
+                window.location.href="/checkList/list";
             }
         </script>
