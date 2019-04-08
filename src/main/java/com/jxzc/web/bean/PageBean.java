@@ -16,6 +16,15 @@ public class PageBean<T> {
 
     private Integer limit = 10;
 
+    public PageBean(Integer count, List<T> data, Integer page, Integer limit) {
+        this.count = count;
+        this.data = data;
+        this.page = page;
+        this.limit = limit;
+    }
+
+    public PageBean() {}
+
     public Integer getCode() {
         return code;
     }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxzc.web.dao.CheckListMapper">
+  <resultMap id="BaseResultMap" type="com.jxzc.web.entity.CheckList">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="checkName" jdbcType="VARCHAR" property="checkname" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, checkname, level, pid
+  </sql>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from checklist order by id
+  </select>
+
+  <insert id="insert" parameterType="com.jxzc.web.entity.CheckList">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into checklist (checkName, level, pid
+      )
+    values (#{checkname,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.jxzc.web.entity.CheckList">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into checklist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="checkname != null">
+        checkName,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="checkname != null">
+        #{checkname,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>嘉数</title>
+	<title>WOWAYZY</title>
 	<link rel="stylesheet" href="../../js/layui/css/layui.css">
 	<script src="../../js/layui/layui.js"></script>
 	<script src="../../js/jq.min.js"></script>

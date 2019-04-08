@@ -10,16 +10,14 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication(exclude = PageHelperAutoConfiguration.class)
-@ServletComponentScan
-@EnableAsync
-@EnableTransactionManagement
+@ServletComponentScan//Servlet、Filter、Listener可以直接通过@WebServlet、@WebFilter、@WebListener注解自动注册
+@EnableAsync//开启多线程
+@EnableTransactionManagement//开启事务支持
 @MapperScan("com.jxzc.web.dao")
-@ComponentScan("com.jxzc.web")
 public class WebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

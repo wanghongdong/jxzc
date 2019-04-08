@@ -22,7 +22,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>嘉数</title>
+    <title>WOWAYZY</title>
     <link rel="stylesheet" href="${ctx}js/layui/css/layui.css">
     <script src="${ctx}js/layui/layui.js"></script>
     <script src="${ctx}js/jq.min.js"></script>
@@ -34,11 +34,10 @@
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo">嘉数-工作总结管理</div>
+            <div class="layui-logo">WOWAYZY-玩儿</div>
             <ul class="layui-nav layui-layout-left">
-                <div class="layui-nav-item" id="dateDom"></div>
-                <%--<li class="layui-nav-item"><a href="">控制台</a></li>--%>
-                <%--<li class="layui-nav-item"><a href="">商品管理</a></li>--%>
+                <li class="layui-nav-item"><a href="/workReport/index">LAYUI DEMO</a></li>
+                <li class="layui-nav-item"><a href="/angJs/list">AngularJS</a></li>
                 <%--<li class="layui-nav-item"><a href="">用户</a></li>--%>
                 <%--<li class="layui-nav-item">--%>
                 <%--<a href="javascript:;">其它系统</a>--%>
@@ -50,6 +49,7 @@
                 <%--</li>--%>
             </ul>
             <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item"><div class="layui-nav-item" id="dateDom"></div></li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
@@ -65,19 +65,24 @@
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree"  lay-filter="menu" id="menu">
-                    <li class="layui-nav-item"><a href="/workReport/index">首页</a></li>
-                    <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
-                    <li class="layui-nav-item">
-                        <a class="" href="javascript:;">分类管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="/class/list">一级分类管理</a></dd>
-                            <dd><a href="/class/list?level=2">二级分类管理</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="javascript:void(0);" onclick="checkCheckList();return false;">CHECKLIST管理</a></li>
+                    <c:if test="${empty menuNum or menuNum == 1}">
+                        <li class="layui-nav-item"><a href="/workReport/index">首页</a></li>
+                        <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
+                        <li class="layui-nav-item">
+                            <a class="" href="javascript:;">分类管理</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="/class/list">一级分类管理</a></dd>
+                                <dd><a href="/class/list?level=2">二级分类管理</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item"><a href="javascript:void(0);" onclick="checkCheckList();return false;">CHECKLIST管理</a></li>
+                    </c:if>
+                    <c:if test="${not empty menuNum or menuNum == 2}">
+                        <li class="layui-nav-item"><a href="/angJs/list">实例</a></li>
+                    </c:if>
                 </ul>
             </div>
-    </div>
+        </div>
         <script>
             $(function(){
                 setInterval(function(){getDate()}, 1000);

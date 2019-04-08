@@ -52,6 +52,9 @@ public class WorkReportController {
 
     @RequestMapping("/index")
     public String index(ModelMap map, HttpServletRequest request) {
+
+        request.getSession().setAttribute("menuNum", 1);
+
         User user = SystemUtils.getCurrentUser(request);
         List<IndustryCategory> categoryList = industryCategoryService.queryList(user.getId());
         Class c = new Class();
