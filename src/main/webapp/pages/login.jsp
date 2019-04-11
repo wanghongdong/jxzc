@@ -17,8 +17,8 @@
     <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
       <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
-          <h2>嘉數資產</h2>
-          <p>工作總結管理系統</p>
+          <h2>暴风城</h2>
+          <p>兽人永不为奴</p>
         </div>
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
           <div class="layui-form-item">
@@ -28,6 +28,19 @@
           <div class="layui-form-item">
             <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
             <input name="password" id="LAY-user-login-password" lay-verify="password" placeholder="密码" class="layui-input" type="password">
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-row">
+              <div class="layui-col-xs7">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+                <input type="text" name="captcha" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+              </div>
+              <div class="layui-col-xs5">
+                <div style="margin-left: 10px;">
+                  <a href="javascript:void(0);" onclick="changeImg();" ><img src="/index/getCaptchaImg" class="layadmin-user-login-codeimg" lay-filter="vercode" id="LAY-user-get-vercode"></a>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="layui-form-item" style="margin-bottom: 20px;">
             <a lay-href="/index/register" href="/index/register" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">账号注册</a>
@@ -62,7 +75,9 @@
                             // });
                             window.location.href = '/workReport/index';
                         }else{
-                            layer.msg(res.msg, {offset: '15px',icon: 2,time: 2000});
+                            layer.msg(res.msg, {offset: '15px',icon: 2,time: 2000}, function(){
+                              changeImg();
+                            });
                         }
                     }
                 });
@@ -88,9 +103,25 @@
                     if(!new RegExp("^[\\S]{6,12}$").test(value)){
                         return '密码必须6到12位，且不能出现空格';
                     }
+                },captcha: function(value, item){ //value：表单的值、item：表单的DOM对象
+                  if (value==null || value== "" || value==undefined){
+                    return '图形验证码不能为空';
+                  }
                 }
             });
         });
+
+        function changeImg(){
+          var timestamp = (new Date()).valueOf();
+          var src = $("#LAY-user-get-vercode").attr("src");
+
+          if ((src.indexOf("&") >= 0)) {
+            src = src + "&timestamp=" + timestamp;
+          } else {
+            src = src + "?timestamp=" + timestamp;
+          }
+          $("#LAY-user-get-vercode").attr("src", src);
+        }
 
     </script>
   </div>

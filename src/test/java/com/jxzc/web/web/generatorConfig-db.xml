@@ -9,23 +9,23 @@
 		</commentGenerator>
 
 		<!-- 数据库连接信息 -->
-		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"	connectionURL="jdbc:mysql://114.116.73.134:3306/js?characterEncoding=utf-8&amp;useSSL=false&amp;useUnicode=true&amp;serverTimezone=UTC" userId="xzw" password="Xzw@2018">
+		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"	connectionURL="jdbc:mysql://rm-2zexcff779dxcyz7d9o.mysql.rds.aliyuncs.com/asset?characterEncoding=utf-8&amp;useSSL=false&amp;useUnicode=true&amp;serverTimezone=UTC" userId="xzw" password="Xzw@2018">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true"/>
 		</javaTypeResolver>
 
 		<!-- po实体类代码位置 -->
-		<javaModelGenerator targetPackage="com.jxzc.web.entity" targetProject="C:\work\development\workspaces1\jxzc\\src\\main\\java">
+		<javaModelGenerator targetPackage="com.izu.demo.entity.asset" targetProject="D:\workspace\user-core\src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		<!-- sql代码的xml映射文件位置 -->
-		<sqlMapGenerator targetPackage="mapper" targetProject="C:\work\development\workspaces1\jxzc\\src\\main\\resources">
+		<sqlMapGenerator targetPackage="mapper.asset" targetProject="D:\workspace\user-core\src\main\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!-- mapper接口位置 -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.jxzc.web.dao" targetProject="C:\work\development\workspaces1\jxzc\\src\\main\\java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="mapper.asset" targetProject="D:\workspace\user-core\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
@@ -37,11 +37,11 @@
 			<!--<generatedKey column="id" sqlStatement="MySql" identity="true" />-->
 		<!--</table>-->
 
-		<table tableName="checklist" domainObjectName="CheckList"
+		<table tableName="car_level" domainObjectName="CarLevel"
 			   enableSelectByExample="true" enableDeleteByExample="true"
 			   enableCountByExample="true" enableUpdateByExample="true">
 			<property name="useActualColumnNames" value="false" />
-			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+			<generatedKey column="level_id" sqlStatement="MySql" identity="true" />
 		</table>
 
 	</context>

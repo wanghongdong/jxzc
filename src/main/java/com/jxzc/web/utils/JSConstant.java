@@ -12,4 +12,6 @@ public class JSConstant {
 
     public static String SESSION_CURRENT_USER = "SESSION_CURRENT_USER";
 
+    public static String SESSION_CURRENT_CAPTCHA = "SESSION_CURRENT_CAPTCHA";
+
 }
