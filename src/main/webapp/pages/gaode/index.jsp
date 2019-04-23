@@ -11,6 +11,10 @@
     <title>Title</title>
 </head>
 <body>
+${demo.name}
+${demo.age}
+<br/>
+
 坐标点：<input name="nodePoints" id="nodePoints" ><br/>
 省：<select name="mapprovince" id="mapprovince" onchange="search(this)"></select><br/>
 市：<select name="mapcity" id="mapcity" onchange="search(this)"></select><br/>
@@ -22,6 +26,25 @@
 <!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=d71b63ade11020736e2b13d3ef3aa3bb&plugin=AMap.ToolBar,AMap.DistrictSearch"></script>-->
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=e154b7157fd92ad5cacdb677f4d1a0cd&plugin=AMap.DistrictSearch"></script>
 <script>
+
+
+    var s = {source:1,
+        reason:1,
+        type:1,
+        phone:18241891872};
+    var par = JSON.stringify(s);
+    $.ajax({
+        url: 'http://localhost:8081/api/userBlack/save.json', //实际使用请改成服务端真实接口
+        data: par,
+        dataType:"json",
+        contentType:"application/json",
+        type:"post",
+        cache:false,
+        success: function(res){
+            console.log(res)
+        }
+    });
+
     var map;
     var district,editorTool;
     var provinceSelect = $("#mapprovince");
@@ -150,6 +173,7 @@
     function closeEditor(){
         editorTool.close();
     }
+
 </script>
 </body>
 </html>

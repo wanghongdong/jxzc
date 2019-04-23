@@ -1,5 +1,7 @@
 package com.jxzc.web.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -8,6 +10,14 @@ public class ExecutorCase {
     private static Executor executor = Executors.newFixedThreadPool(12);
 
     public static void main(String[] args) {
+        List list = new ArrayList();
+        while (true) {
+            list.add(123);
+        }
+    }
+
+
+    public static void demo(){
         for (int i = 0; i < 100; i++) {
             executor.execute(new Task(i));
         }
