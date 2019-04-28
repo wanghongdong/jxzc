@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 public class ExecutorCase {
 
-    private static Executor executor = Executors.newFixedThreadPool(12);
+    private static Executor executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     public static void main(String[] args) {
         List list = new ArrayList();
