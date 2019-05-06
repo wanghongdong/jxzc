@@ -87,7 +87,7 @@ public class CheckList implements Serializable, Comparable<CheckList>{
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false ;
+        if (obj == null) {return false ;}
         else{
             if (obj instanceof CheckList) {
                 CheckList c = (CheckList) obj;

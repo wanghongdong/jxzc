@@ -68,12 +68,15 @@ public class ClassController {
             entity.setCreateId(user.getId());
             i = classService.saveEntity(entity);
         }
-        else
+        else{
             i = classService.updateEntity(entity);
-        if (i>0)
+        }
+        if (i>0){
             return AjaxMsg.success("保存成功！");
-        else
+        }
+        else{
             return AjaxMsg.error("保存失败！");
+        }
     }
 
 
@@ -81,10 +84,8 @@ public class ClassController {
     @RequestMapping("/class/verify")
     public AjaxMsg verify(Class entity,HttpServletRequest request) {
         List<Class> list = classService.verify(entity);
-        if (list.size()>0)
-            return AjaxMsg.error("已存在此行业名称！");
-        else
-            return AjaxMsg.success("验证通过！");
+        if (list.size()>0){return AjaxMsg.error("已存在此行业名称！");}
+        else{return AjaxMsg.success("验证通过！");}
     }
 
     @ResponseBody
@@ -95,10 +96,11 @@ public class ClassController {
         }
         int i = 0;
         i = classService.delEntity(id);
-        if (i>0)
+        if (i>0) {
             return AjaxMsg.success("删除成功！");
-        else
+        } else{
             return AjaxMsg.error("删除失败！");
+        }
     }
 
     @ResponseBody

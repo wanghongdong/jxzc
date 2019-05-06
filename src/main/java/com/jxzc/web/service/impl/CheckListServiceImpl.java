@@ -34,7 +34,7 @@ public class CheckListServiceImpl implements CheckListService {
             if (list.getLevel()==1){
                 List<CheckList> childrens = new ArrayList<>();
                 for (CheckList list1 : checkLists) {
-                    if (list1.getPid()!=null && list1.getPid()==list.getId()){
+                    if (list1.getPid()!=null && list1.getPid().equals(list.getId())){
                         childrens.add(list1);
                     }
                 }

@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +52,7 @@ public class FileController {
             return AjaxMsg.error("上传失败：文件名称不能大于100个字符！");
         }
         String filePath = path + File.separatorChar + SystemUtils.getCurrentUser(request).getLoginName();
-        long time = new Date().getTime();
+        long time = System.currentTimeMillis();
         String fileType = filename.substring(filename.lastIndexOf("."), filename.length());
         File localFile = new File(filePath, time+fileType);
         if (!localFile.getParentFile().exists()){

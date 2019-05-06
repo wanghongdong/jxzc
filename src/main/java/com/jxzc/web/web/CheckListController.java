@@ -80,7 +80,7 @@ public class CheckListController {
             String b2 =  split[1];
             String b3 =  split[2];
             for(CheckList cs : checkLists){
-                if (cs.getId()==Integer.valueOf(id)){
+                if (cs.getId().equals(Integer.valueOf(id))){
                     cs.setB1(b1);
                     cs.setB2(b2);
                     cs.setB3(b3);
@@ -150,15 +150,15 @@ public class CheckListController {
                             int b2n = 3 * weekToday;
                             int b3n = 3 * weekToday +1;
                             HSSFCell cellb1 = row.createCell(b1n);
-                            if(cs.getB1().equals("true")){
+                            if("true".equals(cs.getB1())){
                                 cellb1.setCellStyle(trueStyle);
                             }
                             HSSFCell cellb2 = row.createCell(b2n);
-                            if(cs.getB2().equals("true")){
+                            if("true".equals(cs.getB2())){
                                 cellb2.setCellStyle(trueStyle);
                             }
                             HSSFCell cellb3 = row.createCell(b3n);
-                            if(cs.getB3().equals("true")){
+                            if("true".equals(cs.getB3())){
                                 cellb3.setCellStyle(trueStyle);
                             }
                         }

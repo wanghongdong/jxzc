@@ -21,8 +21,8 @@ public class ClassServiceImpl implements ClassService {
     public List<Class> queryByPid(Integer userId,Integer pid) {
         Class c = new Class();
         c.setCreateId(userId);
-        if (pid==null || pid==1) c.setLevel(1);
-        if (pid==2) c.setLevel(2);
+        if (pid==null || pid==1) {c.setLevel(1);}
+        if (pid==2) {c.setLevel(2);}
         List<Class> classes = this.queryList(c);
         return classes;
     }

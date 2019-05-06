@@ -64,12 +64,9 @@ public class IndustryCategoryController {
             entity.setCreateId(user.getId());
             i = industryCategoryService.saveEntity(entity);
         }
-        else
-            i = industryCategoryService.updateEntity(entity);
-        if (i>0)
-            return AjaxMsg.success("保存成功！");
-        else
-            return AjaxMsg.error("保存失败！");
+        else {i = industryCategoryService.updateEntity(entity);}
+        if (i>0) {return AjaxMsg.success("保存成功！");}
+        else {return AjaxMsg.error("保存失败！"); }
     }
 
 
@@ -77,10 +74,8 @@ public class IndustryCategoryController {
     @RequestMapping("/industryCategory/verify")
     public AjaxMsg verify(IndustryCategory entity,HttpServletRequest request) {
         List<IndustryCategory> list = industryCategoryService.verify(entity);
-        if (list.size()>0)
-            return AjaxMsg.error("已存在此行业名称！");
-        else
-            return AjaxMsg.success("验证通过！");
+        if (list.size()>0){ return AjaxMsg.error("已存在此行业名称！"); }
+        else { return AjaxMsg.success("验证通过！"); }
     }
 
     @ResponseBody
@@ -91,10 +86,8 @@ public class IndustryCategoryController {
         }
         int i = 0;
         i = industryCategoryService.delEntity(id);
-        if (i>0)
-            return AjaxMsg.success("删除成功！");
-        else
-            return AjaxMsg.error("删除失败！");
+        if (i>0) { return AjaxMsg.success("删除成功！"); }
+        else { return AjaxMsg.error("删除失败！"); }
     }
 
 
