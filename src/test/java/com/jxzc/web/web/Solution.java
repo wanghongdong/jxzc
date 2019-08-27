@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @ClassPath com.jxzc.web.web.Solution
  * @ClassName Solution
- * @Description TODO
+ * @Description 最优集合
  * @Author whd
  * @Date 2019/5/23 13:18
  * @Version 1.0

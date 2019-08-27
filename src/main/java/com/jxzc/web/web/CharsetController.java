@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * @ClassPath com.jxzc.web.web.CharsetController
  * @ClassName CharsetController
- * @Description TODO
+ * @Description CharsetController
  * @Author whd
  * @Date 2019/4/29 20:37
  * @Version 1.0
@@ -17,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 @Controller
 public class CharsetController {
 
-        @RequestMapping("index/charset")
+    @RequestMapping("index/charset")
     public void ast(String str, HttpServletRequest request) throws UnsupportedEncodingException {
 
         String characterEncoding = request.getCharacterEncoding();

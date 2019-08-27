@@ -30,6 +30,7 @@
             method:"post",
             elem: '#tableList',
             url:'/easyExcel/list',
+            toolbar:'#toolbarDemo',
 			defaultToolbar: [],
             cols: [[
                 {field:'name', title: '行业名称'}
@@ -47,13 +48,7 @@
         table.on('toolbar(tableList)', function(obj){
             //选中状态
             if (obj.event="add"){
-				layer.open({
-					type: 2 ,
-					title: '行业类别管理',
-					area: ['400px', '300px'],
-					shade: 0,
-					content: '/easyExcel/export'
-				})
+				window.location.href = "/easyExcel/export";
 			}
         });
     });

@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * @ClassPath com.jxzc.web.web.ImgUtils
  * @ClassName ImgUtils
- * @Description TODO
+ * @Description 验证码测试
  * @Author whd
  * @Date 2019/5/7 16:17
  * @Version 1.0

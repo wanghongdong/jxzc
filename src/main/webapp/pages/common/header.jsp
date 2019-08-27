@@ -38,6 +38,7 @@
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item"><a href="/workReport/index">LAYUI DEMO</a></li>
                 <li class="layui-nav-item"><a href="/angJs/list">AngularJS</a></li>
+                <li class="layui-nav-item"><a href="/easyExcel/list">easyExcel</a></li>
                 <%--<li class="layui-nav-item"><a href="">用户</a></li>--%>
                 <%--<li class="layui-nav-item">--%>
                 <%--<a href="javascript:;">其它系统</a>--%>
@@ -53,7 +54,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        ${SESSION_CURRENT_USER.username}
+                        ${SESSION_CURRENT_USER.username}${menuNum}
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">修改密码</a></dd>
@@ -65,7 +66,7 @@
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree"  lay-filter="menu" id="menu">
-                    <c:if test="${empty menuNum or menuNum == 1}">
+                    <c:if test="${empty menuNum and menuNum == 1}">
                         <li class="layui-nav-item"><a href="/workReport/index">首页</a></li>
                         <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
                         <li class="layui-nav-item">
@@ -77,8 +78,11 @@
                         </li>
                         <li class="layui-nav-item"><a href="javascript:void(0);" onclick="checkCheckList();return false;">CHECKLIST管理</a></li>
                     </c:if>
-                    <c:if test="${not empty menuNum or menuNum == 2}">
+                    <c:if test="${not empty menuNum and menuNum == 2}">
                         <li class="layui-nav-item"><a href="/angJs/list">实例</a></li>
+                    </c:if>
+                    <c:if test="${not empty menuNum and menuNum == 3}">
+                        <li class="layui-nav-item"><a href="/easyExcel/list">easyExcel</a></li>
                     </c:if>
                 </ul>
             </div>

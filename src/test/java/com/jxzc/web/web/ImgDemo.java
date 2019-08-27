@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream;
 /**
  * @ClassPath com.jxzc.web.web.ImgDemo
  * @ClassName ImgDemo
- * @Description TODO
+ * @Description 验证码
  * @Author whd
  * @Date 2019/4/25 17:29
  * @Version 1.0

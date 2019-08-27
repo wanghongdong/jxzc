@@ -78,6 +78,7 @@ public class IndexController {
         }
         User user = userMapper.selectUserByLoginName(loginName);
         if (user !=null && user.getPassword().equals(password)){
+            request.getSession().setAttribute("menuNum", 1);
             request.getSession().setAttribute(JSConstant.SESSION_CURRENT_USER,user);
             request.getSession().setMaxInactiveInterval(2*60*60);
             return AjaxMsg.success("登录成功");

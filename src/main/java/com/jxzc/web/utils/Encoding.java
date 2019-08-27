@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 /**
  * @ClassPath com.jxzc.web.utils.Encode
  * @ClassName Encode
- * @Description TODO
+ * @Description 编码
  * @Author whd
  * @Date 2019/4/29 20:51
  * @Version 1.0

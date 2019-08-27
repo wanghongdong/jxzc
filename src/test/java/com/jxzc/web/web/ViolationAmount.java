@@ -3,7 +3,7 @@ package com.jxzc.web.web;
 /**
  * @ClassPath com.jxzc.web.web.Violation
  * @ClassName Violation
- * @Description TODO
+ * @Description 违章
  * @Author whd
  * @Date 2019/5/23 11:45
  * @Version 1.0
