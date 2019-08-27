@@ -1,6 +1,5 @@
 package com.jxzc.web.web;
 
-import com.izu.framework.diamond.annotation.DiamondProperties;
 import com.jxzc.web.bean.PageBean;
 import com.jxzc.web.entity.User;
 import org.slf4j.Logger;
