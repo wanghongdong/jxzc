@@ -14,4 +14,5 @@ public class JSConstant {
 
     public static String SESSION_CURRENT_CAPTCHA = "SESSION_CURRENT_CAPTCHA";
 
+    public static String MENU_NUM = "menuNum";
 }

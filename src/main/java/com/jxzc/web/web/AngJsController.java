@@ -30,7 +30,6 @@ public class AngJsController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listGet(ModelMap map, HttpServletRequest request){
-        request.getSession().setAttribute("menuNum", 2);
         map.addAttribute("fileName", fileName);
         return "angJs/list";
     }

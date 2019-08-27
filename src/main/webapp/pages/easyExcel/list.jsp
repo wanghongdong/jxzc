@@ -33,13 +33,10 @@
             toolbar:'#toolbarDemo',
 			defaultToolbar: [],
             cols: [[
-                {field:'name', title: '行业名称'}
-                ,{field:'isOpen', title: '是否共享', sort: true, templet:function (d) {
-					if (d.isOpen==1) return "<span style='color: limegreen;'>是</span>";
-					else return "<span style='color: red;'>否</span>";
-                }}
-                ,{field:'sort', title: '排序', sort: true}
-                ,{field:'right', title: '操作', toolbar: '#barDemo'}
+                {field:'id', title: 'ID'}
+                ,{field:'name', title: 'name', sort: true}
+                ,{field:'date', title: 'date', sort: true}
+                ,{field:'money', title: 'money', sort: true}
             ]]
             ,page: true
         });

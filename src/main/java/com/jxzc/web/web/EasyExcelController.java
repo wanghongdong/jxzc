@@ -1,5 +1,8 @@
 package com.jxzc.web.web;
 
+import com.alibaba.excel.metadata.Sheet;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.jxzc.web.bean.PageBean;
 import com.jxzc.web.dao.EasyExcelMapper;
 import com.jxzc.web.entity.EasyExcel;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @ClassPath com.jxzc.web.web.EasyExcelController
@@ -36,17 +40,27 @@ public class EasyExcelController {
 
     @ResponseBody
     @RequestMapping(value = "list", method = RequestMethod.POST)
-    public Object list(HttpServletRequest request){
-        return new PageBean();
+    public Object list(HttpServletRequest request, PageBean pageBean){
+        return this.query(pageBean.getPage(), pageBean.getLimit());
     }
 
     @RequestMapping(value = "export")
     public void export(HttpServletResponse response){
-
         ExcelUtil excelUtil = new ExcelUtil();
-
-        MultipleSheetProperty sheetProperty = new MultipleSheetProperty();
-//        excelUtil.writeWithMultipleSheel(response, );
+        int page = 1;
+        int pageSize = 10000;
+        PageBean<EasyExcel> pageDTO;
+        do {
+            pageDTO = this.query(page, pageSize);
+            List<EasyExcel> data = pageDTO.getData();
+            MultipleSheetProperty sheetProperty = new MultipleSheetProperty();
+            sheetProperty.setData(data);
+            Sheet sheet = new Sheet(page-1, 0);
+            sheet.setSheetName("sheet" + page);
+            sheetProperty.setSheet(sheet);
+            excelUtil.writeWithMultipleSheel(response, sheetProperty, pageDTO.getPage() == pageDTO.getPages());
+            page = pageDTO.getNextPageNo();
+        } while (pageDTO.getPage() < pageDTO.getPages());
 
     }
 
@@ -63,4 +77,16 @@ public class EasyExcelController {
         return System.currentTimeMillis() - l;
     }
 
+    private PageBean<EasyExcel> query(int pageNo, int pageSize){
+        int total;
+        List<EasyExcel> list;
+        Page<EasyExcel> page = PageHelper.startPage(pageNo, pageSize, true);
+        try {
+            list = easyExcelMapper.queryAll();
+            total = (int) page.getTotal();
+        } finally {
+            PageHelper.clearPage();
+        }
+        return new PageBean<>(total, list, pageNo, pageSize);
+    }
 }

@@ -1,17 +1,24 @@
 package com.jxzc.web.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.metadata.BaseRowModel;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class EasyExcel {
+public class EasyExcel extends BaseRowModel {
+
+    @ExcelProperty(value = "id", index = 0)
     private Integer id;
 
+    @ExcelProperty(value = "id", index = 0)
     private String name;
 
+    @ExcelProperty(value = "时间", index = 0)
     private Date date;
 
+    @ExcelProperty(value = "id", index = 0)
     private Double money;
 
     public Integer getId() {

@@ -36,9 +36,9 @@
         <div class="layui-header">
             <div class="layui-logo">WOWAYZY-玩儿</div>
             <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a href="/workReport/index">LAYUI DEMO</a></li>
-                <li class="layui-nav-item"><a href="/angJs/list">AngularJS</a></li>
-                <li class="layui-nav-item"><a href="/easyExcel/list">easyExcel</a></li>
+                <li class="layui-nav-item"><a href="/workReport/index?menuNum=1">LAYUI DEMO</a></li>
+                <li class="layui-nav-item"><a href="/angJs/list?menuNum=2">AngularJS</a></li>
+                <li class="layui-nav-item"><a href="/easyExcel/list?menuNum=3">easyExcel</a></li>
                 <%--<li class="layui-nav-item"><a href="">用户</a></li>--%>
                 <%--<li class="layui-nav-item">--%>
                 <%--<a href="javascript:;">其它系统</a>--%>
@@ -54,7 +54,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        ${SESSION_CURRENT_USER.username}${menuNum}
+                        ${SESSION_CURRENT_USER.username}
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">修改密码</a></dd>
@@ -66,7 +66,7 @@
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree"  lay-filter="menu" id="menu">
-                    <c:if test="${empty menuNum and menuNum == 1}">
+                    <c:if test="${empty menuNum or menuNum == 1}">
                         <li class="layui-nav-item"><a href="/workReport/index">首页</a></li>
                         <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
                         <li class="layui-nav-item">

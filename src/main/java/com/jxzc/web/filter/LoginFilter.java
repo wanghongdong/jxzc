@@ -1,8 +1,8 @@
 package com.jxzc.web.filter;
 
-import com.alibaba.druid.util.StringUtils;
 import com.jxzc.web.entity.User;
 import com.jxzc.web.utils.JSConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +45,10 @@ public class LoginFilter implements Filter {
             response.sendRedirect("/index/login");
             return;
         }else{
+            String menuNum = request.getParameter(JSConstant.MENU_NUM);
+            if (StringUtils.isNotEmpty(menuNum)){
+                request.getSession().setAttribute(JSConstant.MENU_NUM, menuNum);
+            }
             filterChain.doFilter(servletRequest,servletResponse);
         }
     }

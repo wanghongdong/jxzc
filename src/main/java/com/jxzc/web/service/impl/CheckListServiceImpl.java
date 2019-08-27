@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.jxzc.web.bean.PageBean;
 import com.jxzc.web.dao.CheckListMapper;
 import com.jxzc.web.entity.CheckList;
-import com.jxzc.web.entity.Class;
 import com.jxzc.web.service.CheckListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class CheckListServiceImpl implements CheckListService {
     public PageBean<CheckList> queryList(PageBean pageBean) {
         PageHelper.startPage(pageBean.getPage(), pageBean.getLimit());
         List<CheckList> list = checkListMapper.queryAll();
-        PageInfo<Class> page = new PageInfo();
+        PageInfo<CheckList> page = new PageInfo();
         pageBean.setCount(page.getSize());
         pageBean.setData(list);
         return pageBean;

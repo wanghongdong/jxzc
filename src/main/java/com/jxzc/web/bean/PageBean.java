@@ -72,4 +72,17 @@ public class PageBean<T> {
     public void setLimit(Integer limit) {
         this.limit = limit;
     }
+
+    public int getPages() {
+        if (getLimit() == 0) {
+            return 0;
+        } else {
+            return ((count + getLimit() - 1) / getLimit());
+        }
+    }
+
+    public int getNextPageNo() {
+        return Math.min(getPage() + 1, getPages());
+    }
+
 }
