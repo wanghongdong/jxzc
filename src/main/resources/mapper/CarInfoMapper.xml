@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxzc.web.dao.CarInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jxzc.web.entity.CarInfo">
+    <id column="car_id" jdbcType="BIGINT" property="carId" />
+    <result column="vehicle_license" jdbcType="VARCHAR" property="vehicleLicense" />
+    <result column="engine_num" jdbcType="VARCHAR" property="engineNum" />
+    <result column="vehicle_vin" jdbcType="VARCHAR" property="vehicleVin" />
+    <result column="vehicle_color" jdbcType="VARCHAR" property="vehicleColor" />
+    <result column="vehicle_license_color" jdbcType="VARCHAR" property="vehicleLicenseColor" />
+    <result column="vehicle_type_code" jdbcType="VARCHAR" property="vehicleTypeCode" />
+    <result column="vehicle_type_name" jdbcType="VARCHAR" property="vehicleTypeName" />
+    <result column="manufacturer_name" jdbcType="VARCHAR" property="manufacturerName" />
+    <result column="model_id" jdbcType="INTEGER" property="modelId" />
+    <result column="vehicle_model_code" jdbcType="VARCHAR" property="vehicleModelCode" />
+    <result column="vehicle_model_name" jdbcType="VARCHAR" property="vehicleModelName" />
+    <result column="vehicle_type" jdbcType="VARCHAR" property="vehicleType" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="belong_buss_code" jdbcType="VARCHAR" property="belongBussCode" />
+    <result column="operate_buss_code" jdbcType="VARCHAR" property="operateBussCode" />
+    <result column="belong_store_id" jdbcType="INTEGER" property="belongStoreId" />
+    <result column="belong_store_code" jdbcType="VARCHAR" property="belongStoreCode" />
+    <result column="admin_city_id" jdbcType="INTEGER" property="adminCityId" />
+    <result column="admin_store_id" jdbcType="INTEGER" property="adminStoreId" />
+    <result column="admin_store_code" jdbcType="VARCHAR" property="adminStoreCode" />
+    <result column="location_city_id" jdbcType="INTEGER" property="locationCityId" />
+    <result column="location_store_id" jdbcType="INTEGER" property="locationStoreId" />
+    <result column="location_store_code" jdbcType="VARCHAR" property="locationStoreCode" />
+    <result column="vehicle_status" jdbcType="TINYINT" property="vehicleStatus" />
+    <result column="operate_status" jdbcType="TINYINT" property="operateStatus" />
+    <result column="business_type" jdbcType="TINYINT" property="businessType" />
+    <result column="commercial_company" jdbcType="VARCHAR" property="commercialCompany" />
+    <result column="commercial_policy" jdbcType="VARCHAR" property="commercialPolicy" />
+    <result column="traffic_company" jdbcType="VARCHAR" property="trafficCompany" />
+    <result column="traffic_policy" jdbcType="VARCHAR" property="trafficPolicy" />
+    <result column="license_picture" jdbcType="VARCHAR" property="licensePicture" />
+    <result column="vehicle_kilometers" jdbcType="INTEGER" property="vehicleKilometers" />
+    <result column="maintenance_kilometers" jdbcType="INTEGER" property="maintenanceKilometers" />
+    <result column="inspection_date" jdbcType="VARCHAR" property="inspectionDate" />
+    <result column="traffic_policy_time" jdbcType="VARCHAR" property="trafficPolicyTime" />
+    <result column="commercial_policy_time" jdbcType="VARCHAR" property="commercialPolicyTime" />
+    <result column="inspection_status" jdbcType="BIT" property="inspectionStatus" />
+    <result column="policy_status" jdbcType="BIT" property="policyStatus" />
+    <result column="putaway" jdbcType="BIT" property="putaway" />
+    <result column="valid" jdbcType="BIT" property="valid" />
+    <result column="creter_id" jdbcType="INTEGER" property="creterId" />
+    <result column="creter_name" jdbcType="VARCHAR" property="creterName" />
+    <result column="update_id" jdbcType="INTEGER" property="updateId" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="online_time" jdbcType="TIMESTAMP" property="onlineTime" />
+    <result column="last_check_car_time" jdbcType="TIMESTAMP" property="lastCheckCarTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    car_id, vehicle_license, engine_num, vehicle_vin, vehicle_color, vehicle_license_color, 
+    vehicle_type_code, vehicle_type_name, manufacturer_name, model_id, vehicle_model_code, 
+    vehicle_model_name, vehicle_type, city_id, city_code, city_name, belong_buss_code, 
+    operate_buss_code, belong_store_id, belong_store_code, admin_city_id, admin_store_id, 
+    admin_store_code, location_city_id, location_store_id, location_store_code, vehicle_status, 
+    operate_status, business_type, commercial_company, commercial_policy, traffic_company, 
+    traffic_policy, license_picture, vehicle_kilometers, maintenance_kilometers, inspection_date, 
+    traffic_policy_time, commercial_policy_time, inspection_status, policy_status, putaway, 
+    valid, creter_id, creter_name, update_id, update_name, create_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from car_info
+    where car_id = #{carId,jdbcType=BIGINT}
+  </select>
+    <select id="selectByVehicleLicense" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from car_info
+        where vehicle_license = #{vehicleLicense}
+    </select>
+  <insert id="insert" parameterType="com.jxzc.web.entity.CarInfo">
+    <selectKey keyProperty="carId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into car_info (vehicle_license, engine_num, vehicle_vin, 
+      vehicle_color, vehicle_license_color, vehicle_type_code, 
+      vehicle_type_name, manufacturer_name, model_id, 
+      vehicle_model_code, vehicle_model_name, vehicle_type, 
+      city_id, city_code, city_name, 
+      belong_buss_code, operate_buss_code, belong_store_id, 
+      belong_store_code, admin_city_id, admin_store_id, 
+      admin_store_code, location_city_id, location_store_id, 
+      location_store_code, vehicle_status, operate_status, 
+      business_type, commercial_company, commercial_policy, 
+      traffic_company, traffic_policy, license_picture, 
+      vehicle_kilometers, maintenance_kilometers, 
+      inspection_date, traffic_policy_time, commercial_policy_time, 
+      inspection_status, policy_status, putaway, 
+      valid, creter_id, creter_name, 
+      update_id, update_name, create_date, 
+      update_date, online_time, last_check_car_time
+      )
+    values (#{vehicleLicense,jdbcType=VARCHAR}, #{engineNum,jdbcType=VARCHAR}, #{vehicleVin,jdbcType=VARCHAR}, 
+      #{vehicleColor,jdbcType=VARCHAR}, #{vehicleLicenseColor,jdbcType=VARCHAR}, #{vehicleTypeCode,jdbcType=VARCHAR}, 
+      #{vehicleTypeName,jdbcType=VARCHAR}, #{manufacturerName,jdbcType=VARCHAR}, #{modelId,jdbcType=INTEGER}, 
+      #{vehicleModelCode,jdbcType=VARCHAR}, #{vehicleModelName,jdbcType=VARCHAR}, #{vehicleType,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=INTEGER}, #{cityCode,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{belongBussCode,jdbcType=VARCHAR}, #{operateBussCode,jdbcType=VARCHAR}, #{belongStoreId,jdbcType=INTEGER}, 
+      #{belongStoreCode,jdbcType=VARCHAR}, #{adminCityId,jdbcType=INTEGER}, #{adminStoreId,jdbcType=INTEGER}, 
+      #{adminStoreCode,jdbcType=VARCHAR}, #{locationCityId,jdbcType=INTEGER}, #{locationStoreId,jdbcType=INTEGER}, 
+      #{locationStoreCode,jdbcType=VARCHAR}, #{vehicleStatus,jdbcType=TINYINT}, #{operateStatus,jdbcType=TINYINT}, 
+      #{businessType,jdbcType=TINYINT}, #{commercialCompany,jdbcType=VARCHAR}, #{commercialPolicy,jdbcType=VARCHAR}, 
+      #{trafficCompany,jdbcType=VARCHAR}, #{trafficPolicy,jdbcType=VARCHAR}, #{licensePicture,jdbcType=VARCHAR}, 
+      #{vehicleKilometers,jdbcType=INTEGER}, #{maintenanceKilometers,jdbcType=INTEGER}, 
+      #{inspectionDate,jdbcType=VARCHAR}, #{trafficPolicyTime,jdbcType=VARCHAR}, #{commercialPolicyTime,jdbcType=VARCHAR}, 
+      #{inspectionStatus,jdbcType=BIT}, #{policyStatus,jdbcType=BIT}, #{putaway,jdbcType=BIT}, 
+      #{valid,jdbcType=BIT}, #{creterId,jdbcType=INTEGER}, #{creterName,jdbcType=VARCHAR}, 
+      #{updateId,jdbcType=INTEGER}, #{updateName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{onlineTime,jdbcType=TIMESTAMP}, #{lastCheckCarTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jxzc.web.entity.CarInfo">
+    <selectKey keyProperty="carId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into car_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vehicleLicense != null">
+        vehicle_license,
+      </if>
+      <if test="engineNum != null">
+        engine_num,
+      </if>
+      <if test="vehicleVin != null">
+        vehicle_vin,
+      </if>
+      <if test="vehicleColor != null">
+        vehicle_color,
+      </if>
+      <if test="vehicleLicenseColor != null">
+        vehicle_license_color,
+      </if>
+      <if test="vehicleTypeCode != null">
+        vehicle_type_code,
+      </if>
+      <if test="vehicleTypeName != null">
+        vehicle_type_name,
+      </if>
+      <if test="manufacturerName != null">
+        manufacturer_name,
+      </if>
+      <if test="modelId != null">
+        model_id,
+      </if>
+      <if test="vehicleModelCode != null">
+        vehicle_model_code,
+      </if>
+      <if test="vehicleModelName != null">
+        vehicle_model_name,
+      </if>
+      <if test="vehicleType != null">
+        vehicle_type,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="belongBussCode != null">
+        belong_buss_code,
+      </if>
+      <if test="operateBussCode != null">
+        operate_buss_code,
+      </if>
+      <if test="belongStoreId != null">
+        belong_store_id,
+      </if>
+      <if test="belongStoreCode != null">
+        belong_store_code,
+      </if>
+      <if test="adminCityId != null">
+        admin_city_id,
+      </if>
+      <if test="adminStoreId != null">
+        admin_store_id,
+      </if>
+      <if test="adminStoreCode != null">
+        admin_store_code,
+      </if>
+      <if test="locationCityId != null">
+        location_city_id,
+      </if>
+      <if test="locationStoreId != null">
+        location_store_id,
+      </if>
+      <if test="locationStoreCode != null">
+        location_store_code,
+      </if>
+      <if test="vehicleStatus != null">
+        vehicle_status,
+      </if>
+      <if test="operateStatus != null">
+        operate_status,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="commercialCompany != null">
+        commercial_company,
+      </if>
+      <if test="commercialPolicy != null">
+        commercial_policy,
+      </if>
+      <if test="trafficCompany != null">
+        traffic_company,
+      </if>
+      <if test="trafficPolicy != null">
+        traffic_policy,
+      </if>
+      <if test="licensePicture != null">
+        license_picture,
+      </if>
+      <if test="vehicleKilometers != null">
+        vehicle_kilometers,
+      </if>
+      <if test="maintenanceKilometers != null">
+        maintenance_kilometers,
+      </if>
+      <if test="inspectionDate != null">
+        inspection_date,
+      </if>
+      <if test="trafficPolicyTime != null">
+        traffic_policy_time,
+      </if>
+      <if test="commercialPolicyTime != null">
+        commercial_policy_time,
+      </if>
+      <if test="inspectionStatus != null">
+        inspection_status,
+      </if>
+      <if test="policyStatus != null">
+        policy_status,
+      </if>
+      <if test="putaway != null">
+        putaway,
+      </if>
+      <if test="valid != null">
+        valid,
+      </if>
+      <if test="creterId != null">
+        creter_id,
+      </if>
+      <if test="creterName != null">
+        creter_name,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="onlineTime != null">
+        online_time,
+      </if>
+      <if test="lastCheckCarTime != null">
+        last_check_car_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vehicleLicense != null">
+        #{vehicleLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNum != null">
+        #{engineNum,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleVin != null">
+        #{vehicleVin,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleColor != null">
+        #{vehicleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleLicenseColor != null">
+        #{vehicleLicenseColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleTypeCode != null">
+        #{vehicleTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleTypeName != null">
+        #{vehicleTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturerName != null">
+        #{manufacturerName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null">
+        #{modelId,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleModelCode != null">
+        #{vehicleModelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleModelName != null">
+        #{vehicleModelName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleType != null">
+        #{vehicleType,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="belongBussCode != null">
+        #{belongBussCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operateBussCode != null">
+        #{operateBussCode,jdbcType=VARCHAR},
+      </if>
+      <if test="belongStoreId != null">
+        #{belongStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="belongStoreCode != null">
+        #{belongStoreCode,jdbcType=VARCHAR},
+      </if>
+      <if test="adminCityId != null">
+        #{adminCityId,jdbcType=INTEGER},
+      </if>
+      <if test="adminStoreId != null">
+        #{adminStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="adminStoreCode != null">
+        #{adminStoreCode,jdbcType=VARCHAR},
+      </if>
+      <if test="locationCityId != null">
+        #{locationCityId,jdbcType=INTEGER},
+      </if>
+      <if test="locationStoreId != null">
+        #{locationStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="locationStoreCode != null">
+        #{locationStoreCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleStatus != null">
+        #{vehicleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="operateStatus != null">
+        #{operateStatus,jdbcType=TINYINT},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="commercialCompany != null">
+        #{commercialCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialPolicy != null">
+        #{commercialPolicy,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficCompany != null">
+        #{trafficCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficPolicy != null">
+        #{trafficPolicy,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePicture != null">
+        #{licensePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleKilometers != null">
+        #{vehicleKilometers,jdbcType=INTEGER},
+      </if>
+      <if test="maintenanceKilometers != null">
+        #{maintenanceKilometers,jdbcType=INTEGER},
+      </if>
+      <if test="inspectionDate != null">
+        #{inspectionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficPolicyTime != null">
+        #{trafficPolicyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialPolicyTime != null">
+        #{commercialPolicyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionStatus != null">
+        #{inspectionStatus,jdbcType=BIT},
+      </if>
+      <if test="policyStatus != null">
+        #{policyStatus,jdbcType=BIT},
+      </if>
+      <if test="putaway != null">
+        #{putaway,jdbcType=BIT},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="creterId != null">
+        #{creterId,jdbcType=INTEGER},
+      </if>
+      <if test="creterName != null">
+        #{creterName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onlineTime != null">
+        #{onlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastCheckCarTime != null">
+        #{lastCheckCarTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jxzc.web.entity.CarInfo">
+    update car_info
+    <set>
+      <if test="vehicleLicense != null">
+        vehicle_license = #{vehicleLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNum != null">
+        engine_num = #{engineNum,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleVin != null">
+        vehicle_vin = #{vehicleVin,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleColor != null">
+        vehicle_color = #{vehicleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleLicenseColor != null">
+        vehicle_license_color = #{vehicleLicenseColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleTypeCode != null">
+        vehicle_type_code = #{vehicleTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleTypeName != null">
+        vehicle_type_name = #{vehicleTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturerName != null">
+        manufacturer_name = #{manufacturerName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null">
+        model_id = #{modelId,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleModelCode != null">
+        vehicle_model_code = #{vehicleModelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleModelName != null">
+        vehicle_model_name = #{vehicleModelName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleType != null">
+        vehicle_type = #{vehicleType,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="belongBussCode != null">
+        belong_buss_code = #{belongBussCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operateBussCode != null">
+        operate_buss_code = #{operateBussCode,jdbcType=VARCHAR},
+      </if>
+      <if test="belongStoreId != null">
+        belong_store_id = #{belongStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="belongStoreCode != null">
+        belong_store_code = #{belongStoreCode,jdbcType=VARCHAR},
+      </if>
+      <if test="adminCityId != null">
+        admin_city_id = #{adminCityId,jdbcType=INTEGER},
+      </if>
+      <if test="adminStoreId != null">
+        admin_store_id = #{adminStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="adminStoreCode != null">
+        admin_store_code = #{adminStoreCode,jdbcType=VARCHAR},
+      </if>
+      <if test="locationCityId != null">
+        location_city_id = #{locationCityId,jdbcType=INTEGER},
+      </if>
+      <if test="locationStoreId != null">
+        location_store_id = #{locationStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="locationStoreCode != null">
+        location_store_code = #{locationStoreCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleStatus != null">
+        vehicle_status = #{vehicleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="operateStatus != null">
+        operate_status = #{operateStatus,jdbcType=TINYINT},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=TINYINT},
+      </if>
+      <if test="commercialCompany != null">
+        commercial_company = #{commercialCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialPolicy != null">
+        commercial_policy = #{commercialPolicy,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficCompany != null">
+        traffic_company = #{trafficCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficPolicy != null">
+        traffic_policy = #{trafficPolicy,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePicture != null">
+        license_picture = #{licensePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleKilometers != null">
+        vehicle_kilometers = #{vehicleKilometers,jdbcType=INTEGER},
+      </if>
+      <if test="maintenanceKilometers != null">
+        maintenance_kilometers = #{maintenanceKilometers,jdbcType=INTEGER},
+      </if>
+      <if test="inspectionDate != null">
+        inspection_date = #{inspectionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficPolicyTime != null">
+        traffic_policy_time = #{trafficPolicyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialPolicyTime != null">
+        commercial_policy_time = #{commercialPolicyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionStatus != null">
+        inspection_status = #{inspectionStatus,jdbcType=BIT},
+      </if>
+      <if test="policyStatus != null">
+        policy_status = #{policyStatus,jdbcType=BIT},
+      </if>
+      <if test="putaway != null">
+        putaway = #{putaway,jdbcType=BIT},
+      </if>
+      <if test="valid != null">
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="creterId != null">
+        creter_id = #{creterId,jdbcType=INTEGER},
+      </if>
+      <if test="creterName != null">
+        creter_name = #{creterName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onlineTime != null">
+        online_time = #{onlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastCheckCarTime != null">
+        last_check_car_time = #{lastCheckCarTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where car_id = #{carId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jxzc.web.entity.CarInfo">
+    update car_info
+    set vehicle_license = #{vehicleLicense,jdbcType=VARCHAR},
+      engine_num = #{engineNum,jdbcType=VARCHAR},
+      vehicle_vin = #{vehicleVin,jdbcType=VARCHAR},
+      vehicle_color = #{vehicleColor,jdbcType=VARCHAR},
+      vehicle_license_color = #{vehicleLicenseColor,jdbcType=VARCHAR},
+      vehicle_type_code = #{vehicleTypeCode,jdbcType=VARCHAR},
+      vehicle_type_name = #{vehicleTypeName,jdbcType=VARCHAR},
+      manufacturer_name = #{manufacturerName,jdbcType=VARCHAR},
+      model_id = #{modelId,jdbcType=INTEGER},
+      vehicle_model_code = #{vehicleModelCode,jdbcType=VARCHAR},
+      vehicle_model_name = #{vehicleModelName,jdbcType=VARCHAR},
+      vehicle_type = #{vehicleType,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      belong_buss_code = #{belongBussCode,jdbcType=VARCHAR},
+      operate_buss_code = #{operateBussCode,jdbcType=VARCHAR},
+      belong_store_id = #{belongStoreId,jdbcType=INTEGER},
+      belong_store_code = #{belongStoreCode,jdbcType=VARCHAR},
+      admin_city_id = #{adminCityId,jdbcType=INTEGER},
+      admin_store_id = #{adminStoreId,jdbcType=INTEGER},
+      admin_store_code = #{adminStoreCode,jdbcType=VARCHAR},
+      location_city_id = #{locationCityId,jdbcType=INTEGER},
+      location_store_id = #{locationStoreId,jdbcType=INTEGER},
+      location_store_code = #{locationStoreCode,jdbcType=VARCHAR},
+      vehicle_status = #{vehicleStatus,jdbcType=TINYINT},
+      operate_status = #{operateStatus,jdbcType=TINYINT},
+      business_type = #{businessType,jdbcType=TINYINT},
+      commercial_company = #{commercialCompany,jdbcType=VARCHAR},
+      commercial_policy = #{commercialPolicy,jdbcType=VARCHAR},
+      traffic_company = #{trafficCompany,jdbcType=VARCHAR},
+      traffic_policy = #{trafficPolicy,jdbcType=VARCHAR},
+      license_picture = #{licensePicture,jdbcType=VARCHAR},
+      vehicle_kilometers = #{vehicleKilometers,jdbcType=INTEGER},
+      maintenance_kilometers = #{maintenanceKilometers,jdbcType=INTEGER},
+      inspection_date = #{inspectionDate,jdbcType=VARCHAR},
+      traffic_policy_time = #{trafficPolicyTime,jdbcType=VARCHAR},
+      commercial_policy_time = #{commercialPolicyTime,jdbcType=VARCHAR},
+      inspection_status = #{inspectionStatus,jdbcType=BIT},
+      policy_status = #{policyStatus,jdbcType=BIT},
+      putaway = #{putaway,jdbcType=BIT},
+      valid = #{valid,jdbcType=BIT},
+      creter_id = #{creterId,jdbcType=INTEGER},
+      creter_name = #{creterName,jdbcType=VARCHAR},
+      update_id = #{updateId,jdbcType=INTEGER},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      online_time = #{onlineTime,jdbcType=TIMESTAMP},
+      last_check_car_time = #{lastCheckCarTime,jdbcType=TIMESTAMP}
+    where car_id = #{carId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -2,12 +2,9 @@ package com.jxzc.web.filter;
 
 import com.jxzc.web.entity.User;
 import com.jxzc.web.utils.JSConstant;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,9 +17,9 @@ import java.io.IOException;
  * @Date: 2018/10/14 20 02
  * @Description: 登录拦截
  * */
-@Configuration
-@Component //这个注解的目的是将LoginFilter交给容器来处理。也就是让LoginFilter起作用
-@WebFilter(filterName = "loginFilter", urlPatterns = "/*")
+//@Configuration
+//@Component //这个注解的目的是将LoginFilter交给容器来处理。也就是让LoginFilter起作用
+//@WebFilter(filterName = "loginFilter", urlPatterns = "/*")
 public class LoginFilter implements Filter {
 
 

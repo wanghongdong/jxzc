@@ -1,7 +1,7 @@
 package com.jxzc.web.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.jxzc.web.bean.PageBean;
 import com.jxzc.web.dao.IndustryCategoryMapper;
 import com.jxzc.web.entity.IndustryCategory;
@@ -25,10 +25,9 @@ public class IndustryCategoryServiceImpl implements IndustryCategoryService {
 
     @Override
     public PageBean<IndustryCategory> queryList(PageBean pageBean,Integer userId) {
-        PageHelper.startPage(pageBean.getPage(), pageBean.getLimit());
+        Page<IndustryCategory> page = PageHelper.startPage(pageBean.getPage(), pageBean.getLimit());
         List<IndustryCategory> list = industryCategoryMapper.queryListByPage(userId);
-        PageInfo<IndustryCategory> page = new PageInfo();
-        pageBean.setCount(page.getSize());
+        pageBean.setCount((int) page.getTotal());
         pageBean.setData(list);
         return pageBean;
     }

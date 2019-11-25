@@ -6,9 +6,8 @@ import com.jxzc.web.entity.*;
 import com.jxzc.web.service.ClassService;
 import com.jxzc.web.service.IndustryCategoryService;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.Region;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,7 +58,7 @@ public class ExcelUtils {
             Row row = rit.next();
             for (Iterator<Cell> cit = row.cellIterator(); cit.hasNext(); ) {
                 Cell cell = cit.next();
-                if (cell.getCellType()== HSSFCell.CELL_TYPE_STRING && cell.getStringCellValue().equals(twoClass.getClassname())){
+                if (cell.getCellType()== CellType.STRING && cell.getStringCellValue().equals(twoClass.getClassname())){
                     rowIndex = cell.getRowIndex();
                 }
             }
@@ -70,8 +69,8 @@ public class ExcelUtils {
         font.setFontHeightInPoints((short) 11);
         //设置单元格样式
         HSSFCellStyle style = excel.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_LEFT);//水平
-        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
+        style.setAlignment(HorizontalAlignment.CENTER);//水平
+        style.setVerticalAlignment(VerticalAlignment.CENTER);//垂直
         style.setFont(font);
         style.setWrapText(true);
         if(rowIndex!=null){
@@ -135,14 +134,14 @@ public class ExcelUtils {
         font.setFontHeightInPoints((short) 11);
         //设置单元格样式
         HSSFCellStyle headStyle = excel.createCellStyle();
-        headStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平
-        headStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
+        headStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);//水平
+        headStyle.setVerticalAlignment(VerticalAlignment.CENTER);//垂直
         headStyle.setFont(font);
         headStyle.setWrapText(true);
         //设置单元格样式
         HSSFCellStyle cellStyle = excel.createCellStyle();
-        cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);//水平
-        cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
+        cellStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);//水平
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);//垂直
         cellStyle.setFont(font);
         cellStyle.setWrapText(true);
         //创建表头
@@ -183,7 +182,7 @@ public class ExcelUtils {
                     //结束二级分类设置时的行索引
                     int endRowIndex = rowIndex -1;
                     //合并单元格
-                    sheet.addMergedRegion(new Region(startRowIndex, //first row (0-based)
+                    sheet.addMergedRegion(new CellRangeAddress(startRowIndex, //first row (0-based)
                             (short)0, //first column  (0-based)
                             endRowIndex, //last row (0-based)
                             (short)0  //last column  (0-based)
@@ -225,7 +224,7 @@ public class ExcelUtils {
         HSSFCell cell3 = row.createCell(4);
         cell3.setCellStyle(cellStyle);
         cell3.setCellValue("图片");
-        sheet.addMergedRegion(new Region(0, //first row (0-based)
+        sheet.addMergedRegion(new CellRangeAddress(0, //first row (0-based)
                 (short)0, //first column  (0-based)
                 0, //last row (0-based)
                 (short)1  //last column  (0-based)
@@ -393,7 +392,7 @@ public class ExcelUtils {
             if (shapes!=null && shapes.size()>0){
                 for (HSSFShape shape : shapes) {
                     HSSFClientAnchor anchor = (HSSFClientAnchor) shape.getAnchor();
-                    anchor.setAnchorType(HSSFClientAnchor.MOVE_AND_RESIZE);
+                    anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);
                     if (anchor.getRow1()>=insertRowIndex){
                         anchor.setRow1(anchor.getRow1()+1);
                         anchor.setRow2(anchor.getRow1()+1);
@@ -401,7 +400,7 @@ public class ExcelUtils {
                 }
             }
         }
-        sheet.addMergedRegion(new Region(startRowIndex, //first row (0-based)
+        sheet.addMergedRegion(new CellRangeAddress(startRowIndex, //first row (0-based)
                 (short)1, //first column  (0-based)
                 endRowIndex, //last row (0-based)
                 (short)1  //last column  (0-based)

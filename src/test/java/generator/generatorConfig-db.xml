@@ -9,9 +9,13 @@
 		</commentGenerator>
 
 		<!-- 数据库连接信息 -->
-		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"	connectionURL="jdbc:mysql://localhost:3306/js?characterEncoding=utf-8&amp;useSSL=false&amp;useUnicode=true&amp;serverTimezone=UTC"
-            userId="whd" password="123456">
-		</jdbcConnection>
+<!--		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"	connectionURL="jdbc:mysql://localhost:3306/js?characterEncoding=utf-8&amp;useSSL=false&amp;useUnicode=true&amp;serverTimezone=UTC"-->
+<!--            userId="whd" password="123456">-->
+<!--		</jdbcConnection>-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://rm-2zeko3cw2a55qw5j03o.mysql.rds.aliyuncs.com:3306/asset?useUnicode=true&amp;characterEncoding=UTF-8"
+                        userId="root" password="E4xA5fMLBwqkoF">
+        </jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true"/>
 		</javaTypeResolver>
@@ -30,11 +34,11 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="easy_excel" domainObjectName="EasyExcel"
+		<table tableName="car_info" domainObjectName="CarInfo"
 			   enableSelectByExample="false" enableDeleteByExample="false"
 			   enableCountByExample="false" enableUpdateByExample="false">
 			<property name="useActualColumnNames" value="false" />
-			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+			<generatedKey column="car_id" sqlStatement="MySql" identity="true" />
 		</table>
 
 	</context>

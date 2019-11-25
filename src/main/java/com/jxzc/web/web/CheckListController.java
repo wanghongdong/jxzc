@@ -11,6 +11,7 @@ import com.jxzc.web.utils.SystemUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,8 +133,8 @@ public class CheckListController {
 
     public String create(List<CheckList> list, HSSFWorkbook workbook){
         HSSFCellStyle style = workbook.createCellStyle();
-        style.setFillForegroundColor(HSSFColor.LIME.index);// 设置背景色
-        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style.setFillForegroundColor(HSSFColor.HSSFColorPredefined.LIME.getIndex());// 设置背景色
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         HSSFCellStyle trueStyle = style;
         Calendar cal = Calendar.getInstance();
         int weekToday = cal.get(Calendar.DAY_OF_WEEK)-1;

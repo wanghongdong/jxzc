@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -45,7 +47,20 @@ public class EasyExcelController {
     }
 
     @RequestMapping(value = "export")
-    public void export(HttpServletResponse response){
+    public void export(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        String fileName = "导出.xlsx";
+        response.reset();
+        response.setContentType("multipart/form-data");
+        //获得浏览器信息并转换为大写
+        String agent = request.getHeader("User-Agent").toUpperCase();
+        //IE浏览器和Edge浏览器
+        if (agent.indexOf("MSIE") > 0 || (agent.indexOf("GECKO")>0 && agent.indexOf("RV:11")>0)) {
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+        } else {
+            fileName = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
+        }
+        response.setHeader("Content-Disposition", "attachment; filename="+fileName);
+
         ExcelUtil excelUtil = new ExcelUtil();
         int page = 1;
         int pageSize = 10000;
@@ -58,10 +73,9 @@ public class EasyExcelController {
             Sheet sheet = new Sheet(page-1, 0);
             sheet.setSheetName("sheet" + page);
             sheetProperty.setSheet(sheet);
-            excelUtil.writeWithMultipleSheel(response, sheetProperty, pageDTO.getPage() == pageDTO.getPages());
+            excelUtil.writeWithMultipleSheet(response, sheetProperty, pageDTO.getPage() == 3);
             page = pageDTO.getNextPageNo();
-        } while (pageDTO.getPage() < pageDTO.getPages());
-
+        } while (pageDTO.getPage() <= 3);
     }
 
     @ResponseBody

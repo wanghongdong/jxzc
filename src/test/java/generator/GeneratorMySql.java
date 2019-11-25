@@ -16,7 +16,7 @@ public class GeneratorMySql{
 	public static void main(String[] args) throws Exception{
         List<String> warnings = new ArrayList<String>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
-        File file = new File("D:\\workspace\\jxzc\\src\\test\\java\\com\\jxzc\\web\\web\\generatorConfig-db.xml");
+        File file = new File("D:\\workspace\\jxzc\\src\\test\\java\\generator\\generatorConfig-db.xml");
         Configuration config = cp.parseConfiguration(file);
 
         DefaultShellCallback callback = new DefaultShellCallback(true);

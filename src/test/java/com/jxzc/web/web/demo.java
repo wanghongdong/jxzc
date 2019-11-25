@@ -81,8 +81,7 @@ public class demo {
     public static JSONArray getCity(){
         String restUrl = new ThirdRestLocator().getRestUrl("/violation/postCities");
         RestResponse response = RestClient.requestForObject(BaseHttpClient.HttpMethod.POST, restUrl, null, null, null);
-        JSONArray jsonObject = (JSONArray) response.getData();
-        return jsonObject;
+        return (JSONArray) response.getData();
     }
 
     public static Map<String, PictureData> getSheetPictrues03(int sheetNum, HSSFSheet sheet, HSSFWorkbook workbook) {
