@@ -42,12 +42,12 @@ public class OccupyCarController {
     @Test
     public void test(){
         try {
-            XSSFWorkbook workbook = new XSSFWorkbook("C:\\Users\\lunan\\Desktop\\548报卖车11.21（城市已确认）.xlsx");
-            XSSFSheet sheetAt = workbook.getSheetAt(1);
-            for (int i = 1; i < 549; i++) {
+            XSSFWorkbook workbook = new XSSFWorkbook("C:\\Users\\lunan\\Desktop\\第四批835辆短租车辆报卖.xlsx");
+            XSSFSheet sheetAt = workbook.getSheetAt(0);
+            for (int i = 548; i < 836; i++) {
                 XSSFRow row = sheetAt.getRow(i);
                 if (row!=null){
-                    String cellValue = ExcelUtil.getCellValue(row.getCell(1));
+                    String cellValue = ExcelUtil.getCellValue(row.getCell(0));
                     log.info("第{}行，cellValue={}", i, cellValue);
                     CarInfo carInfo = carInfoMapper.selectByVehicleLicense(cellValue);
                     if (carInfo!=null){

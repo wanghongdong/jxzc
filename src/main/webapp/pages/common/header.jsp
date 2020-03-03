@@ -15,7 +15,7 @@
     if(serverPort==80){
         basePath = "//"+request.getServerName()+path+"/";
     }else{
-       basePath = "//"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        basePath = "//"+request.getServerName()+":"+request.getServerPort()+path+"/";
     }
 %>
 <c:set var="ctx" value="<%=basePath%>"/>
@@ -36,18 +36,15 @@
         <div class="layui-header">
             <div class="layui-logo">WOWAYZY-玩儿</div>
             <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="/home/index?menuNum=0">首页</a></li>
                 <li class="layui-nav-item"><a href="/workReport/index?menuNum=1">LAYUI DEMO</a></li>
                 <li class="layui-nav-item"><a href="/angJs/list?menuNum=2">AngularJS</a></li>
-                <li class="layui-nav-item"><a href="/easyExcel/list?menuNum=3">easyExcel</a></li>
-                <%--<li class="layui-nav-item"><a href="">用户</a></li>--%>
-                <%--<li class="layui-nav-item">--%>
-                <%--<a href="javascript:;">其它系统</a>--%>
-                <%--<dl class="layui-nav-child">--%>
-                <%--<dd><a href="">邮件管理</a></dd>--%>
-                <%--<dd><a href="">消息管理</a></dd>--%>
-                <%--<dd><a href="">授权管理</a></dd>--%>
-                <%--</dl>--%>
-                <%--</li>--%>
+                <li class="layui-nav-item"><a href="javascript:;">其它系统</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/violation/list?menuNum=3">违章查询</a></dd>
+                        <dd><a href="/easyExcel/list?menuNum=3">easyExcel</a></dd>
+                    </dl>
+                </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item"><div class="layui-nav-item" id="dateDom"></div></li>
@@ -62,31 +59,33 @@
                 </li>
             </ul>
         </div>
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree"  lay-filter="menu" id="menu">
-                    <c:if test="${empty menuNum or menuNum == 1}">
-                        <li class="layui-nav-item"><a href="/workReport/index">首页</a></li>
-                        <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
-                        <li class="layui-nav-item">
-                            <a class="" href="javascript:;">分类管理</a>
-                            <dl class="layui-nav-child">
-                                <dd><a href="/class/list">一级分类管理</a></dd>
-                                <dd><a href="/class/list?level=2">二级分类管理</a></dd>
-                            </dl>
-                        </li>
-                        <li class="layui-nav-item"><a href="javascript:void(0);" onclick="checkCheckList();return false;">CHECKLIST管理</a></li>
-                    </c:if>
-                    <c:if test="${not empty menuNum and menuNum == 2}">
-                        <li class="layui-nav-item"><a href="/angJs/list">实例</a></li>
-                    </c:if>
-                    <c:if test="${not empty menuNum and menuNum == 3}">
-                        <li class="layui-nav-item"><a href="/easyExcel/list">easyExcel</a></li>
-                    </c:if>
-                </ul>
+        <c:if test="${not empty menuNum}">
+            <div class="layui-side layui-bg-black">
+                <div class="layui-side-scroll">
+                    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                    <ul class="layui-nav layui-nav-tree"  lay-filter="menu" id="menu">
+                        <c:if test="${menuNum == 1}">
+                            <li class="layui-nav-item"><a href="/workReport/index">首页</a></li>
+                            <li class="layui-nav-item"><a href="/industryCategory/list">行业管理</a></li>
+                            <li class="layui-nav-item">
+                                <a class="" href="javascript:;">分类管理</a>
+                                <dl class="layui-nav-child">
+                                    <dd><a href="/class/list">一级分类管理</a></dd>
+                                    <dd><a href="/class/list?level=2">二级分类管理</a></dd>
+                                </dl>
+                            </li>
+                            <li class="layui-nav-item"><a href="javascript:void(0);" onclick="checkCheckList();return false;">CHECKLIST管理</a></li>
+                        </c:if>
+                        <c:if test="${menuNum == 2}">
+                            <li class="layui-nav-item"><a href="/angJs/list">实例</a></li>
+                        </c:if>
+                        <c:if test="${menuNum == 3}">
+                            <li class="layui-nav-item"><a href="/easyExcel/list">easyExcel</a></li>
+                        </c:if>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </c:if>
         <script>
             $(function(){
                 setInterval(function(){getDate()}, 1000);

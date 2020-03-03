@@ -3,8 +3,10 @@ package com.jxzc.web.filter;
 import com.jxzc.web.entity.User;
 import com.jxzc.web.utils.JSConstant;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,11 +19,10 @@ import java.io.IOException;
  * @Date: 2018/10/14 20 02
  * @Description: 登录拦截
  * */
-//@Configuration
+@Configuration
 //@Component //这个注解的目的是将LoginFilter交给容器来处理。也就是让LoginFilter起作用
-//@WebFilter(filterName = "loginFilter", urlPatterns = "/*")
+@WebFilter(filterName = "loginFilter", urlPatterns = "/*")
 public class LoginFilter implements Filter {
-
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -44,7 +45,11 @@ public class LoginFilter implements Filter {
         }else{
             String menuNum = request.getParameter(JSConstant.MENU_NUM);
             if (StringUtils.isNotEmpty(menuNum)){
-                request.getSession().setAttribute(JSConstant.MENU_NUM, menuNum);
+                if (menuNum.equals("0")){
+                    request.getSession().removeAttribute(JSConstant.MENU_NUM);
+                }else{
+                    request.getSession().setAttribute(JSConstant.MENU_NUM, menuNum);
+                }
             }
             filterChain.doFilter(servletRequest,servletResponse);
         }

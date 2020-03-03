@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.Charset;
@@ -23,9 +24,13 @@ public class CustomMvcConfiguration implements WebMvcConfigurer {
 
     @Bean
     public HttpMessageConverter<String> responseBodyConverter() {
-        StringHttpMessageConverter messageConverter = new StringHttpMessageConverter(
+        return new StringHttpMessageConverter(
                 Charset.forName("UTF-8"));
-        return messageConverter;
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/", "index/login");
     }
 
     @Override
