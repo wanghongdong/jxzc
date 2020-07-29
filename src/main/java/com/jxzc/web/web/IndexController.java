@@ -3,6 +3,7 @@ package com.jxzc.web.web;
 import com.jxzc.web.bean.AjaxMsg;
 import com.jxzc.web.dao.UserMapper;
 import com.jxzc.web.entity.User;
+import com.jxzc.web.service.ViolationContent;
 import com.jxzc.web.utils.JSConstant;
 import com.wf.captcha.ChineseGifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
@@ -34,6 +35,8 @@ public class IndexController {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    ViolationContent content;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Map<String,Object> map) {
