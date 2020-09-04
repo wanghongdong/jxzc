@@ -1,6 +1,7 @@
 package com.jxzc.web.dao;
 
 import com.jxzc.web.entity.Class;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface ClassMapper {
     List<Class> queryList(Class c);
 
     List<Class> queryTwoList(Class c);
+
+    int batchInsert(@Param("list") List<Class> list);
 }

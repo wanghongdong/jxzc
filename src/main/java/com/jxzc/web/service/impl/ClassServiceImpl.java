@@ -98,4 +98,10 @@ public class ClassServiceImpl implements ClassService {
     }
 
 
+    @Override
+    public int batchInsert(List<Class> list){
+        return classMapper.batchInsert(list);
+    }
+
+
 }

@@ -34,7 +34,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getServletPath();
-        if (!StringUtils.isEmpty(path) && (path.startsWith("/index") || path.startsWith("/css") || path.startsWith("/js"))){
+        if (!StringUtils.isEmpty(path) && (path.startsWith("/index") || path.startsWith("/css") || path.startsWith("/js") || path.startsWith("/class/batchInsert"))){
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }

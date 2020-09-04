@@ -161,4 +161,57 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+        INSERT INTO class
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.classname != null">
+                    classname,
+                </if>
+                <if test="item.level != null">
+                    level,
+                </if>
+                <if test="item.pid != null">
+                    pid,
+                </if>
+                <if test="item.sort != null">
+                    sort,
+                </if>
+                <if test="item.isOpen != null">
+                    is_open,
+                </if>
+                <if test="item.createId != null">
+                    create_id,
+                </if>
+                <if test="item.createTime != null">
+                    create_time,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.classname != null">
+                    #{item.classname,jdbcType=VARCHAR},
+                </if>
+                <if test="item.level != null">
+                    #{item.level,jdbcType=INTEGER},
+                </if>
+                <if test="item.pid != null">
+                    #{item.pid,jdbcType=INTEGER},
+                </if>
+                <if test="item.sort != null">
+                    #{item.sort,jdbcType=INTEGER},
+                </if>
+                <if test="item.isOpen != null">
+                    #{item.isOpen,jdbcType=INTEGER},
+                </if>
+                <if test="item.createId != null">
+                    #{item.createId,jdbcType=INTEGER},
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+            </trim>
+        </foreach>
+
+    </insert>
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,4 +116,22 @@ public class ClassController {
         return AjaxMsg.success("删除成功！",map);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/class/batchInsert", method = RequestMethod.POST)
+    public AjaxMsg batchInsert(HttpServletRequest request) {
+        long l = System.currentTimeMillis();
+        List<Class> list = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            Class c = new Class();
+            c.setClassname("批量"+i);
+            c.setLevel(i);
+            if (i%2==1){
+                c.setPid(i-1);
+            }
+            list.add(c);
+        }
+        int i = classService.batchInsert(list);
+        long l1 = System.currentTimeMillis();
+        return AjaxMsg.success(String.format("插入 %s 条数据，用时 %s s", list.size() , (l1-l)/1000));
+    }
 }

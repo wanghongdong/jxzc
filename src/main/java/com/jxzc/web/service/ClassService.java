@@ -28,4 +28,6 @@ public interface ClassService {
     List<Class> queryTwoList(Integer pid, Integer userId);
 
     Map<Class,TreeSet<Class>> queryMyClasses(Integer userId);
+
+    int batchInsert(List<Class> list);
 }
