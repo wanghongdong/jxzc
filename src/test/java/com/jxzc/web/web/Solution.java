@@ -49,7 +49,7 @@ public class Solution {
         int[] amountArray = {100,600,700,400,500};
         List<List<Integer>> lists = combinationSum2(amountArray, 1500);
         Integer i = null;
-        List<Integer> los = null;
+        List<Integer> los = new ArrayList<>();
         for (List<Integer> list : lists){
             int sum = getSum(list);
             if (sum<1500){

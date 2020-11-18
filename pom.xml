@@ -207,6 +207,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibaba-dingtalk-service-sdk</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>com.izu</groupId>
             <artifactId>third-common</artifactId>
             <version>1.0-SNAPSHOT</version>

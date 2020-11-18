@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.groupingBy;
 
-public class parallelStream {
+public class ParallelStream {
 
     //java8支持并行处理数据
     //并行就是 同时执行，传统的java程序，只能利用一个cpu ，如果电脑如果有八个cpu
